@@ -1,4 +1,4 @@
-:root {
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -53,6 +53,30 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+} */
+
+html,
+body {
+  margin: 0;
+}
+
+.App {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background-color: #ffffff;
+  color: #1f6817;
+  font-family: sans-serif;
+}
+
+main {
+  margin: 0 auto;
+  max-width: 80ch;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media (prefers-color-scheme: light) {
@@ -61,7 +85,7 @@ button:focus-visible {
     background-color: #ffffff;
   }
   a:hover {
-    color: #747bff;
+    color: #199f27;
   }
   button {
     background-color: #f9f9f9;
