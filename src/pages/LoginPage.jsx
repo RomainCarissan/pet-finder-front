@@ -1,7 +1,7 @@
 import { useRef, useState, useContext } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./../context/AuthContext";
+import myApi from "../service/service";
 // import { AuthContext } from "./../context/AuthContext.jsx"
 
 /**
@@ -26,12 +26,13 @@ function LoginPage() {
     const email = emailInput.current.value;
     const password = passwordInput.current.value;
     try {
-      const response = await axios.post("http://localhost:5005/auth/login", {
+      const response = await myApi.post("/auth/login", {
         email,
         password,
       });
       console.log("success", response);
-      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("authToken", response.data.authToken);
+
       await authenticateUser();
       navigate("/");
     } catch (error) {

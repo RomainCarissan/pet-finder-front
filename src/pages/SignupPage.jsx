@@ -1,5 +1,4 @@
-import { useRef, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import myApi from "../service/service";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -39,8 +38,8 @@ function SignupPage() {
     // Make an axios request to the API
     // If POST request is successful redirect to login page
     // If the request resolves with an error, set the error message in the state
-    axios
-      .post("http://localhost:5005/auth/signup", requestBody)
+    myApi
+      .post("/auth/signup", requestBody)
       .then(() => {
         navigate("/login");
       })
@@ -53,9 +52,7 @@ function SignupPage() {
   return (
     <div>
       <form onSubmit={handleSignupSubmit}>
-        <h3 className="text-2xl font-semibold text-gray-700 mb-6 sticky left-0">
-          Sign Up
-        </h3>
+        <h3>Sign Up</h3>
         <div>
           <label htmlFor="email">Email</label>
           <input

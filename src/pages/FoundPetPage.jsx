@@ -10,7 +10,16 @@ function FoundPetPage() {
       </p>
     );
   }
-  return <h1>FoundPetPage</h1>;
+  return (
+    <>
+      <h1>FoundPetPage</h1>
+      <div>
+        <Link to="/found-pet-form">
+          <button>Report a found</button>
+        </Link>
+      </div>
+    </>
+  );
 }
 
 export default FoundPetPage;

@@ -10,7 +10,16 @@ function LostPetPage() {
       </p>
     );
   }
-  return <h1>LostPetPage</h1>;
+  return (
+    <>
+      <h1>LostPetPage</h1>
+      <div>
+        <Link to="/lost-pet-form">
+          <button>Report a loss</button>
+        </Link>
+      </div>
+    </>
+  );
 }
 
 export default LostPetPage;
