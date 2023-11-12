@@ -14,7 +14,8 @@ import FoundPetPage from "./pages/FoundPetPage";
 import LostPetPage from "./pages/LostPetPage";
 import FoundPetFormPage from "./pages/FoundPetFormPage";
 import LostPetFormPage from "./pages/LostPetFormPage";
-import OnePetPage from "./pages/OnePetPage.jsx";
+import OneLostPetPage from "./pages/OneLostPetPage.jsx";
+import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
 
 function App() {
   return (
@@ -28,11 +29,11 @@ function App() {
             {/* is Logged in */}
             <Route element={<LoggedInUser />}>
               <Route path="/found-pet" element={<FoundPetPage />}>
-                <Route path=":id" element={<OnePetPage />} />
+                <Route path=":id" element={<OneFoundPetPage />} />
               </Route>
               <Route path="/found-pet-form" element={<FoundPetFormPage />} />
               <Route path="/lost-pet" element={<LostPetPage />}>
-                <Route path=":id" element={<OnePetPage />} />
+                <Route path=":id" element={<OneLostPetPage />} />
               </Route>
               <Route path="/lost-pet-form" element={<LostPetFormPage />} />
             </Route>

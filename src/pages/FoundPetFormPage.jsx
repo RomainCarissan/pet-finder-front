@@ -2,6 +2,7 @@ import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import myApi from "../service/service";
+import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput";
 
 function FoundPetFormPage() {
   const islostState = useState("true");
@@ -144,11 +145,13 @@ function FoundPetFormPage() {
             ></textarea>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="foundPlace">Found Place: </label>
             <input type="text" ref={foundPlaceInput} id="foundPlace" />
+          </div> */}
+          <div>
+            <SearchPlaceInput></SearchPlaceInput>
           </div>
-
           <div>
             <button type="submit">Submit</button>
           </div>

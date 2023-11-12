@@ -16,10 +16,10 @@ function HomePage() {
   return (
     <>
       <div className="form-block">
-        <Link to="/found-pet">
+        <Link to="/lost-pet">
           <button>I found a pet</button>
         </Link>
-        <Link to="/lost-pet">
+        <Link to="/found-pet">
           <button>I lost a pet</button>
         </Link>
       </div>
