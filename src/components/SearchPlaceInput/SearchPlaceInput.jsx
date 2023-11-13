@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-
+import axios from "axios";
 function SearchPlaceInput() {
   const [address, setAddress] = useState("");
   const [coordinates, setCoordinates] = useState({
@@ -9,18 +9,31 @@ function SearchPlaceInput() {
     lng: null,
   });
 
-  const handleSelect = async (value) => {
-    const result = await geocodeByAddress(value);
-    const ll = await getLatLng(result[0]);
-    console.log(ll);
-    setAddress(value);
-    setCoordinates(ll);
+  // const handleSelect = async (value) => {
+  //   const result = await geocodeByAddress(value);
+  //   const ll = await getLatLng(result[0]);
+  //   console.log(ll);
+  //   setAddress(value);
+  //   setCoordinates(ll);
+  // };
+  const handleChange = (e) => {
+    axios
+      .get("https://geocode.maps.co/search?q=" + e.target.value)
+      .then((res) => {
+        console.log(res.data[0]);
+        /* const latLong = [res.data[0].lat, res.data[0].lon];
+        setAddress(res.data[0].display_name);
+        console.log(res.data[0].display_name);
+        console.log(latLong); */
+      })
+      .catch(console.log);
   };
-
   return (
     <>
       <div>
-        <PlacesAutocomplete
+        <input type="text" value={address} onChange={handleChange} />
+
+        {/* <PlacesAutocomplete
           value={address}
           onChange={setAddress}
           onSelect={handleSelect}
@@ -62,7 +75,7 @@ function SearchPlaceInput() {
               </div>
             </div>
           )}
-        </PlacesAutocomplete>
+        </PlacesAutocomplete> */}
       </div>
     </>
   );

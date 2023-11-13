@@ -3,19 +3,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import myApi from "../service/service";
 import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput";
+import { DogFormColors } from "../components/FormTypes/DogFormType";
+import { CatFormColors } from "../components/FormTypes/CatFormType";
+import ExoticFormBreeds from "../components/FormTypes/ExoticFormType";
 
 function FoundPetFormPage() {
   const islostState = useState("true");
   const petNameInput = useRef();
   const foundDateInput = useRef();
-  const petTypeInput = useRef();
+  /* const petTypeInput = useRef() */
+  const [petTypeInput, setPetTypeInput] = useState("");
   const petSexInput = useRef();
   const identificationInput = useRef();
+  const breedInput = useRef();
   const colorsInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const foundPlaceInput = useRef();
   const [error, setError] = useState("");
+
+  const handlePetTypeChange = (event) => {
+    setPetTypeInput(event.target.value);
+  };
 
   const navigate = useNavigate();
 
@@ -23,9 +32,10 @@ function FoundPetFormPage() {
     event.preventDefault();
     const petName = petNameInput.current.value;
     const foundDate = foundDateInput.current.value;
-    const petType = petTypeInput.current.value;
+    /* const petType = petTypeInput.current.value; */
     const petSex = petSexInput.current.value;
     const identification = identificationInput.current.value;
+    const breed = breedInput.current.value;
     const colors = colorsInput.current.value;
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
@@ -34,9 +44,10 @@ function FoundPetFormPage() {
     const fd = new FormData();
     fd.append("petName", petName);
     fd.append("foundDate", foundDate);
-    fd.append("petType", petType);
+    fd.append("petType", petTypeInput);
     fd.append("petSex", petSex);
     fd.append("identification", identification);
+    fd.append("breed", breed);
     fd.append("colors", colors);
     fd.append("picture", picture);
     fd.append("description", description);
@@ -86,13 +97,18 @@ function FoundPetFormPage() {
 
           <div>
             <label htmlFor="petType">Type of Pet: </label>
-            <select ref={petTypeInput} id="petType" required="required">
+            <select
+              value={petTypeInput}
+              id="petType"
+              required="required"
+              onChange={handlePetTypeChange}
+            >
               <option value="" disabled>
                 Select your response
               </option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
-              <option value="NAC">NAC</option>
+              <option value="Exotic">Exotic</option>
               <option value="Other">Other</option>
             </select>
           </div>
@@ -110,6 +126,18 @@ function FoundPetFormPage() {
           </div>
 
           <div>
+            <label htmlFor="breed">Breed: </label>
+            <select type="text" ref={breedInput} id="breed">
+              {petTypeInput == !"Exotic" && (
+                <option value="">No need to specify</option>
+              )}
+              {petTypeInput === "Exotic" && (
+                <ExoticFormBreeds></ExoticFormBreeds>
+              )}
+            </select>
+          </div>
+
+          <div>
             <label htmlFor="identification">Identification: </label>
             <input
               type="text"
@@ -121,12 +149,19 @@ function FoundPetFormPage() {
 
           <div>
             <label htmlFor="colors">Colors: </label>
-            <input
+            <select
               type="text"
               ref={colorsInput}
               id="colors"
               required="required"
-            />
+            >
+              {petTypeInput === "" && (
+                <option value="">Select the type of pet first</option>
+              )}
+              {petTypeInput === "Cat" && <CatFormColors></CatFormColors>}
+              {petTypeInput === "Dog" && <DogFormColors></DogFormColors>}
+              {petTypeInput === "Exotic" && <option value="none">None</option>}
+            </select>
           </div>
 
           <div>

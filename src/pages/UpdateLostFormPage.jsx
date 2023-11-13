@@ -12,7 +12,7 @@ import {
 } from "../components/FormTypes/CatFormType";
 import ExoticFormBreeds from "../components/FormTypes/ExoticFormType";
 
-function LostPetFormPage() {
+function UpdateLostFormPage() {
   const islostState = useState("true");
   const petNameInput = useRef();
   const lossDateInput = useRef();
@@ -248,4 +248,4 @@ function LostPetFormPage() {
   );
 }
 
-export default LostPetFormPage;
+export default UpdateLostFormPage;

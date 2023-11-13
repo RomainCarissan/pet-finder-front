@@ -25,8 +25,9 @@ function AuthContextWrapper({ children }) {
       return;
     }
     try {
-      const user = await myApi.getUserInfos();
-      setUser(user);
+      const res = await myApi.getUserInfos();
+      //console.log(res);
+      setUser(res.data);
       setIsLoggedIn(true);
       setIsLoading(false);
     } catch (error) {

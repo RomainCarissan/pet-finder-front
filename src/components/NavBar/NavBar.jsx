@@ -18,7 +18,7 @@ function Navbar() {
           <li>
             <NavLink to="/">Home</NavLink>
 
-            <NavLink to="/about">About</NavLink>
+            <NavLink to="/my-profil">My Profil</NavLink>
           </li>
         </ul>
       </nav>

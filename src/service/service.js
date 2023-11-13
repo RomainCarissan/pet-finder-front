@@ -6,12 +6,7 @@ const myApi = axios.create({
 
 // Custom method to get user information
 myApi.getUserInfos = function () {
-  return myApi
-    .get("/auth/verify")
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => console.log(error));
+  return myApi.get("/auth/verify");
 };
 
 // Custom method for user signup

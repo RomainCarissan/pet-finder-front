@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
-import { useState, useEffect, useParams } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import myApi from "../service/service";
 
 function OneLostPetPage() {
@@ -22,7 +22,7 @@ function OneLostPetPage() {
   const { isLoggedIn } = useAuth();
 
   if (!oneLossReport) {
-    return <p>Error: Receipe not found</p>;
+    return <p>Error: Report not found</p>;
   }
 
   if (!isLoggedIn) {
@@ -35,14 +35,21 @@ function OneLostPetPage() {
 
   return (
     <>
-      <h1>OnePetPage</h1>
+      <h1>OneLossPetPage</h1>
       <div>
         <div className="containerOneLossReport">
           <div className="photoReport">
-            <img className="photo" src={oneLossReport.picture} />
+            <img
+              className="photo"
+              style={{ height: "10rem" }}
+              src={oneLossReport.picture}
+            />
             <h2>{oneLossReport.petName}</h2>
             <p className="LossPlace">Lost around : {oneLossReport.lossPlace}</p>
             <p className="LossDate"> {oneLossReport.lossDate}</p>
+            <p className="Description">
+              Description : {oneLossReport.description}
+            </p>
           </div>
         </div>
       </div>
