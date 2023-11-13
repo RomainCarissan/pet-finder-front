@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import myApi from "../service/service";
 
@@ -7,6 +8,7 @@ function ProfilPage() {
   const [personalLossReports, setPersonalLossReports] = useState(null);
   const [personalFoundReports, setPersonalFoundReports] = useState(null);
   const { user, isLoggedIn } = useAuth();
+  const navigate = useNavigate();
   const userId = user["_id"];
   //console.log(userId);
 
@@ -42,6 +44,14 @@ function ProfilPage() {
     }
   };
 
+  const handleUpdateLossForm = (id) => {
+    navigate(`/found-pet-form-update/${id}`);
+  };
+
+  const handleUpdateFoundForm = (id) => {
+    navigate(`/found-pet-form-update/${id}`);
+  };
+
   if (!isLoggedIn) {
     return (
       <p>
@@ -65,13 +75,23 @@ function ProfilPage() {
                   />
                 </div>
                 <div className="lostPet-info">
-                  <h1>{lostPet._id}</h1>
                   <h3>{lostPet.petName}</h3>
                   <h4>lost around: {lostPet.lossPlace}</h4>
                   {/* <h4>{lostPet.lossDate}</h4> */}
                 </div>
               </div>
-              <div onClick={() => handleDeleteLostReport(lostPet._id)}>🗑️</div>
+              {lostPet.creator === userId && (
+                <div onClick={() => handleDeleteLostReport(lostPet._id)}>
+                  🗑️
+                </div>
+              )}
+              <div>
+                {lostPet.creator === userId && (
+                  <button onClick={() => handleUpdateLossForm(lostPet._id)}>
+                    Edit
+                  </button>
+                )}
+              </div>
             </React.Fragment>
           );
         })}
@@ -88,14 +108,22 @@ function ProfilPage() {
                   />
                 </div>
                 <div className="foundPet-info">
-                  <h2>{foundPet._id}</h2>
                   <h3>{foundPet.petName}</h3>
                   <h4>found around: {foundPet.foundPlace}</h4>
                   {/* <h4>{foundPet.lossDate}</h4> */}
                 </div>
               </div>
-              <div onClick={() => handleDeleteFoundReport(foundPet._id)}>
-                🗑️
+              {foundPet.creator === userId && (
+                <div onClick={() => handleDeleteFoundReport(foundPet._id)}>
+                  🗑️
+                </div>
+              )}
+              <div>
+                {foundPet.creator === userId && (
+                  <button onClick={() => handleUpdateFoundForm(foundPet._id)}>
+                    Edit
+                  </button>
+                )}
               </div>
             </React.Fragment>
           );

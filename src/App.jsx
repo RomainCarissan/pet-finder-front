@@ -16,6 +16,8 @@ import FoundPetFormPage from "./pages/FoundPetFormPage";
 import LostPetFormPage from "./pages/LostPetFormPage";
 import OneLostPetPage from "./pages/OneLostPetPage.jsx";
 import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
+import UpdateLostFormPage from "./pages/UpdateLostFormPage";
+import UpdateFoundFormPage from "./pages/UpdateLostFormPage";
 
 function App() {
   return (
@@ -32,10 +34,19 @@ function App() {
               <Route path="/found-pet/:id" element={<OneFoundPetPage />} />
               {/* </Route> */}
               <Route path="/found-pet-form" element={<FoundPetFormPage />} />
+              <Route
+                path="/found-pet-form-update/:id"
+                element={<UpdateFoundFormPage />}
+              />
+
               <Route path="/lost-pet" element={<LostPetPage />} />
               <Route path="/lost-pet/:id" element={<OneLostPetPage />} />
               {/* </Route> */}
               <Route path="/lost-pet-form" element={<LostPetFormPage />} />
+              <Route
+                path="/lost-pet-form-update/:id"
+                element={<UpdateLostFormPage />}
+              />
             </Route>
             {/* Login / Signup routes should be accessible to Logged out users */}
 
