@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext.jsx";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import myApi from "../service/service.jsx";
+import myApi from "../service/service.js";
 
 function OneLostPetPage() {
   const [oneLossReport, setOneLossReport] = useState(null);

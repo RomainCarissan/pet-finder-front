@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext.jsx";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import myApi from "../service/service.jsx";
+import myApi from "../service/service.js";
 import {
   DogFormBreeds,
   DogFormColors,

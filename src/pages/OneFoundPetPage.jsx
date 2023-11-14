@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import myApi from "../service/service";
+import myApi from "../service/service.js";
 
 function OneFoundPetPage() {
   const [oneFoundReport, setOneFoundReport] = useState(null);
