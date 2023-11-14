@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
-import { useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
 import myApi from "../service/service";
 import {
   DogFormBreeds,
@@ -15,6 +15,23 @@ import ExoticFormBreeds from "../components/FormTypes/ExoticFormType";
 function UpdateFoundFormPage() {
   const { user, isLoggedIn } = useAuth();
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const [petData, setPetData] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchPetData = async () => {
+      try {
+        const response = await myApi.get(`/api/foundpets/${id}`);
+        setPetData(response.data);
+      } catch (error) {
+        console.log(error.response);
+        setError("Failed to fetch previous pet data");
+      }
+    };
+    fetchPetData();
+  }, [id]);
 
   const islostState = useState("true");
   const petNameInput = useRef();
@@ -32,9 +49,13 @@ function UpdateFoundFormPage() {
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const lossPlaceInput = useRef();
-  const [error, setError] = useState("");
 
-  const navigate = useNavigate();
+  // Ensure that petData is available before setting the value of petTypeInput
+  useEffect(() => {
+    if (petData) {
+      setPetTypeInput(petData["petType"]);
+    }
+  }, [petData]);
 
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
@@ -74,9 +95,9 @@ function UpdateFoundFormPage() {
     fd.append("lossPlace", lossPlace);
 
     try {
-      const response = await myApi.put("/api/lostpets", fd);
-      console.log("lost-pet added", response);
-      navigate("/lost-pet");
+      const response = await myApi.put(`/api/foundpets/${id}`, fd);
+      console.log("found-pet added", response);
+      navigate(`foundpets/${id}`);
     } catch (error) {
       console.log(error.response);
       setError(error.response.data.message);
@@ -93,6 +114,9 @@ function UpdateFoundFormPage() {
       </p>
     );
   }
+  if (!petData) {
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <h1>lostPetFormPage</h1>
@@ -104,13 +128,19 @@ function UpdateFoundFormPage() {
               type="text"
               ref={petNameInput}
               id="petName"
+              defaultValue={petData["petName"]}
               placeholder="The name of your pet"
             />
           </div>
 
           <div>
             <label htmlFor="lossDate">Loss Date: </label>
-            <input type="date" ref={lossDateInput} id="lossDate" />
+            <input
+              type="date"
+              ref={lossDateInput}
+              id="lossDate"
+              defaultValue={petData["founddate"]}
+            />
           </div>
 
           <div>
@@ -131,7 +161,12 @@ function UpdateFoundFormPage() {
 
           <div>
             <label htmlFor="petSex">Pet Sex: </label>
-            <select ref={petSexInput} id="petSex" required="required">
+            <select
+              ref={petSexInput}
+              id="petSex"
+              required="required"
+              defaultValue={petData["petSex"]}
+            >
               <option value="">Select your response</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -140,7 +175,12 @@ function UpdateFoundFormPage() {
 
           <div>
             <label htmlFor="sterilized">Sterilized: </label>
-            <select ref={sterilizedInput} id="sterilized" required="required">
+            <select
+              ref={sterilizedInput}
+              id="sterilized"
+              required="required"
+              defaultValue={petData["sterilized"]}
+            >
               <option value="">Select your response</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -153,13 +193,19 @@ function UpdateFoundFormPage() {
               type="text"
               ref={identificationInput}
               id="identification"
+              defaultValue={petData["identification"]}
               placeholder="Tatoo or Chip number"
             />
           </div>
 
           <div>
             <label htmlFor="breed">Breed: </label>
-            <select type="text" ref={breedInput} id="breed">
+            <select
+              type="text"
+              ref={breedInput}
+              id="breed"
+              defaultValue={petData["breed"]}
+            >
               {petTypeInput === "" && (
                 <option value="">Select the type of pet first</option>
               )}
@@ -173,7 +219,12 @@ function UpdateFoundFormPage() {
 
           <div>
             <label htmlFor="mixed">Mixed Breed: </label>
-            <select ref={mixedInput} id="mixed" required="required">
+            <select
+              ref={mixedInput}
+              id="mixed"
+              required="required"
+              defaultValue={petData["mixed"]}
+            >
               <option value="">Select your response</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -187,6 +238,7 @@ function UpdateFoundFormPage() {
               ref={colorsInput}
               id="colors"
               required="required"
+              defaultValue={petData["colors"]}
             >
               {petTypeInput === "" && (
                 <option value="">Select the type of pet first</option>
@@ -204,11 +256,17 @@ function UpdateFoundFormPage() {
               ref={ageInput}
               id="age"
               required="required"
+              defaultValue={petData["age"]}
               placeholder="The age of your pet"
             />
 
             <label htmlFor="ageUnit"></label>
-            <select ref={ageUnitInput} id="ageUnit" required="required">
+            <select
+              ref={ageUnitInput}
+              id="ageUnit"
+              required="required"
+              defaultValue={petData["ageUnit"]}
+            >
               <option value="">Y/M ?</option>
               <option value="year(s)">Year(s)</option>
               <option value="month(s)">Month(s)</option>

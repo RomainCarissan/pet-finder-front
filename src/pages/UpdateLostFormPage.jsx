@@ -132,6 +132,7 @@ function UpdateLostFormPage() {
               ref={petNameInput}
               id="petName"
               defaultValue={petData["petName"]}
+              placeholder="The name of your pet"
             />
           </div>
 
@@ -277,7 +278,7 @@ function UpdateLostFormPage() {
 
           <div>
             <label htmlFor="picture">Picture: </label>
-            <input type="file" ref={pictureInput} id="picture" />
+            <input type="file" ref={pictureInput} id="picture" multiple />
           </div>
 
           <div>

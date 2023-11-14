@@ -81,17 +81,18 @@ function ProfilPage() {
                 </div>
               </div>
               {lostPet.creator === userId && (
-                <div onClick={() => handleDeleteLostReport(lostPet._id)}>
-                  🗑️
+                <div>
+                  <div onClick={() => handleDeleteLostReport(lostPet._id)}>
+                    🗑️
+                  </div>
+
+                  <div>
+                    <button onClick={() => handleUpdateLossForm(lostPet._id)}>
+                      Edit
+                    </button>
+                  </div>
                 </div>
               )}
-              <div>
-                {lostPet.creator === userId && (
-                  <button onClick={() => handleUpdateLossForm(lostPet._id)}>
-                    Edit
-                  </button>
-                )}
-              </div>
             </React.Fragment>
           );
         })}
@@ -114,17 +115,18 @@ function ProfilPage() {
                 </div>
               </div>
               {foundPet.creator === userId && (
-                <div onClick={() => handleDeleteFoundReport(foundPet._id)}>
-                  🗑️
+                <div>
+                  <div onClick={() => handleDeleteFoundReport(foundPet._id)}>
+                    🗑️
+                  </div>
+
+                  <div>
+                    <button onClick={() => handleUpdateFoundForm(foundPet._id)}>
+                      Edit
+                    </button>
+                  </div>
                 </div>
               )}
-              <div>
-                {foundPet.creator === userId && (
-                  <button onClick={() => handleUpdateFoundForm(foundPet._id)}>
-                    Edit
-                  </button>
-                )}
-              </div>
             </React.Fragment>
           );
         })}
