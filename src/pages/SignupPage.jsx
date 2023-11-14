@@ -1,5 +1,5 @@
 import { useState } from "react";
-import myApi from "../service/service";
+import myApi from "../service/service.jsx";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignupPage() {

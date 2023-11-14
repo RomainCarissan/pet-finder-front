@@ -1,7 +1,7 @@
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import myApi from "../service/service";
+import myApi from "../service/service.jsx";
 
 function FoundPetPage() {
   const [foundReports, setFoundReports] = useState(null);

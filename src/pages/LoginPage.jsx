@@ -1,7 +1,7 @@
 import { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./../context/AuthContext";
-import myApi from "../service/service";
+import { useAuth } from "./../context/AuthContext.jsx";
+import myApi from "../service/service.jsx";
 // import { AuthContext } from "./../context/AuthContext.jsx"
 
 /**

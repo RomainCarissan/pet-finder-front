@@ -1,11 +1,11 @@
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import myApi from "../service/service";
-import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput";
-import { DogFormColors } from "../components/FormTypes/DogFormType";
-import { CatFormColors } from "../components/FormTypes/CatFormType";
-import ExoticFormBreeds from "../components/FormTypes/ExoticFormType";
+import myApi from "../service/service.jsx";
+import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput.jsx";
+import { DogFormColors } from "../components/FormTypes/DogFormType.jsx";
+import { CatFormColors } from "../components/FormTypes/CatFormType.jsx";
+import ExoticFormBreeds from "../components/FormTypes/ExoticFormType.jsx";
 
 function FoundPetFormPage() {
   const islostState = useState("true");

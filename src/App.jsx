@@ -1,23 +1,23 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import Layout from "./layouts/Layout";
+import Layout from "./layouts/Layout.jsx";
 
-import LoggedOutUser from "./navigation/LoggedOutUser";
-import LoggedInUser from "./navigation/LoggedInUser";
+import LoggedOutUser from "./navigation/LoggedOutUser.jsx";
+import LoggedInUser from "./navigation/LoggedInUser.jsx";
 
-import HomePage from "./pages/HomePage";
-import ProfilPage from "./pages/ProfilPage";
-import SignupPage from "./pages/SignupPage";
-import LoginPage from "./pages/LoginPage";
-import FoundPetPage from "./pages/FoundPetPage";
-import LostPetPage from "./pages/LostPetPage";
-import FoundPetFormPage from "./pages/FoundPetFormPage";
-import LostPetFormPage from "./pages/LostPetFormPage";
+import HomePage from "./pages/HomePage.jsx";
+import ProfilPage from "./pages/ProfilPage.jsx";
+import SignupPage from "./pages/SignupPage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
+import FoundPetPage from "./pages/FoundPetPage.jsx";
+import LostPetPage from "./pages/LostPetPage.jsx";
+import FoundPetFormPage from "./pages/FoundPetFormPage.jsx";
+import LostPetFormPage from "./pages/LostPetFormPage.jsx";
 import OneLostPetPage from "./pages/OneLostPetPage.jsx";
 import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
-import UpdateLostFormPage from "./pages/UpdateLostFormPage";
-import UpdateFoundFormPage from "./pages/UpdateLostFormPage";
+import UpdateLostFormPage from "./pages/UpdateLostFormPage.jsx";
+import UpdateFoundFormPage from "./pages/UpdateLostFormPage.jsx";
 
 function App() {
   return (

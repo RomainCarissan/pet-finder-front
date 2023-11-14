@@ -1,16 +1,16 @@
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/AuthContext.jsx";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import myApi from "../service/service";
+import myApi from "../service/service.jsx";
 import {
   DogFormBreeds,
   DogFormColors,
-} from "../components/FormTypes/DogFormType";
+} from "../components/FormTypes/DogFormType.jsx";
 import {
   CatFormBreeds,
   CatFormColors,
-} from "../components/FormTypes/CatFormType";
-import ExoticFormBreeds from "../components/FormTypes/ExoticFormType";
+} from "../components/FormTypes/CatFormType.jsx";
+import ExoticFormBreeds from "../components/FormTypes/ExoticFormType.jsx";
 
 function UpdateFoundFormPage() {
   const { user, isLoggedIn } = useAuth();
