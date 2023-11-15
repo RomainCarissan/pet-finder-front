@@ -1,8 +1,7 @@
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
 import { Link } from "react-router-dom";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import PetMap from "../components/PetMap/PetMap.jsx";
+import "./HomePage.css";
+import PetMap from "../../components/PetMap/PetMap.jsx";
 
 function HomePage() {
   const { isLoggedIn } = useAuth();
@@ -15,16 +14,27 @@ function HomePage() {
     );
   } */
   return (
-    <>
-      <div className="form-block">
-        <Link to="/lost-pet">
-          <button>I found a pet</button>
-        </Link>
-        <Link to="/found-pet">
-          <button>I lost a pet</button>
-        </Link>
-      </div>
-      <div>
+    <div className="homePageContainer">
+      {isLoggedIn ? (
+        <div className="buttonsHolder">
+          <Link to="/lost-pet">
+            <button className="homepageButton">I found a pet</button>
+          </Link>
+          <Link to="/found-pet">
+            <button className="homepageButton">I lost a pet</button>
+          </Link>
+        </div>
+      ) : (
+        <div className="buttonsHolder">
+          <Link to="/login">
+            <button className="homepageButton">I found a pet</button>
+          </Link>
+          <Link to="/login">
+            <button className="homepageButton">I lost a pet</button>
+          </Link>
+        </div>
+      )}
+      <div className="mapHolder">
         <PetMap></PetMap>
         {/* <MapContainer
           center={[51.505, -0.09]}
@@ -46,7 +56,7 @@ function HomePage() {
           </Marker>
         </MapContainer> */}
       </div>
-    </>
+    </div>
   );
 }
 

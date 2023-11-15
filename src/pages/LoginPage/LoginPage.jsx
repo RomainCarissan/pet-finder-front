@@ -1,7 +1,8 @@
 import { useRef, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./../context/AuthContext.jsx";
-import myApi from "../service/service.js";
+import { useAuth } from "../../context/AuthContext.jsx";
+import myApi from "../../service/service.js";
+import "./LoginPage.css";
 // import { AuthContext } from "./../context/AuthContext.jsx"
 
 /**
@@ -44,18 +45,40 @@ function LoginPage() {
     }
   }
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="email">Email: </label>
-        <input type="text" ref={emailInput} id="email" autoComplete="off" />
+    <>
+      <div className="titleSignIn">
+        <h1>Please, log in...🦦</h1>
       </div>
-      <div>
-        <label htmlFor="password">Password: </label>
-        <input type="password" ref={passwordInput} id="password" />
-      </div>
-      <button>Login</button>
-      <p className="error">{error}</p>
-    </form>
+      <form onSubmit={handleSubmit} className="formSignIn">
+        <div>
+          <label htmlFor="email" className="labelSignIn">
+            Email:{" "}
+          </label>
+          <input
+            type="text"
+            ref={emailInput}
+            id="email"
+            autoComplete="off"
+            className="inputSignIn"
+          />
+        </div>
+        <div>
+          <label htmlFor="password" className="labelSignIn">
+            Password:{" "}
+          </label>
+          <input
+            type="password"
+            ref={passwordInput}
+            id="password"
+            className="inputSignIn"
+          />
+        </div>
+        <div>
+          <button className="buttonSignIn">Login</button>
+        </div>
+        <p className="error">{error}</p>
+      </form>
+    </>
   );
 }
 

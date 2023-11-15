@@ -1,11 +1,12 @@
 import { useAuth } from "../context/AuthContext";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import myApi from "../service/service.js";
 
 function OneFoundPetPage() {
   const [oneFoundReport, setOneFoundReport] = useState(null);
   const params = useParams();
+  const navigate = useNavigate();
 
   async function fetchOneFoundReport() {
     try {
@@ -38,9 +39,14 @@ function OneFoundPetPage() {
     day: "numeric",
   }).format(new Date(oneFoundReport.foundDate));
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <>
       <h1>OneFoundPetPage</h1>
+      <button onClick={goBack}>Go Back</button>
       <div>
         <div className="containerOneFoundReport">
           <div className="photoReport">

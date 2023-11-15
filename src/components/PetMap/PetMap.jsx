@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import myApi from "../../service/service";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import "./PetMap.css";
 
 function PetMap() {
   const [allLossReports, setAllLossReports] = useState(null);
@@ -24,7 +25,7 @@ function PetMap() {
   }, []);
 
   const formatDate = (dateString) => {
-    return new Intl.DateTimeFormat("en-US", {
+    return new Intl.DateTimeFormat(undefined, {
       year: "numeric",
       month: "long",
       day: "numeric",
@@ -60,7 +61,7 @@ function PetMap() {
         center={[46.603354, 1.8883335]}
         zoom={5}
         scrollWheelZoom={true}
-        style={{ height: "20rem", width: "25rem" }}
+        style={{ height: "30rem", width: "35rem", borderRadius: "37px " }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -78,18 +79,16 @@ function PetMap() {
                   position={report.latLon.split(",")}
                   /* icon={lossIcon} */ icon={getColorMarker("red")}
                 >
-                  <Popup>
-                    <div>
-                      <img
-                        src={report.picture}
-                        alt={`${report._id} image`}
-                        style={{ height: "5rem" }}
-                      />
+                  <Popup className="Popup">
+                    <div className="imageContainer">
+                      <img src={report.picture} alt={`${report._id} image`} />
                     </div>
-                    Name: {report.petName} <br />
-                    Lost since:
-                    {formatDate(report.lossDate)}
-                    <h3>Lost around {report.lossPlace}</h3>
+                    <div className="infoContainer">
+                      Name: {report.petName} <br />
+                      Lost since: {formatDate(report.lossDate)} <br />
+                      Tatoo: {report.identification}
+                    </div>
+                    <h3>Lost around: {report.lossPlace}</h3>
                   </Popup>
                 </Marker>
               </div>
@@ -107,16 +106,15 @@ function PetMap() {
                   position={report.latLon.split(",")}
                   /* icon={foundIcon} */ icon={getColorMarker("green")}
                 >
-                  <Popup>
-                    <div>
-                      <img
-                        src={report.picture}
-                        alt={`${report._id} image`}
-                        style={{ height: "5rem" }}
-                      />
+                  <Popup className="Popup">
+                    <div className="imageContainer">
+                      <img src={report.picture} alt={`${report._id} image`} />
                     </div>
-                    Name: {report.petName} <br />
-                    Found since: {formatDate(report.foundDate)}
+                    <div className="infoContainer">
+                      Name: {report.petName} <br />
+                      Found since: {formatDate(report.foundDate)} <br />
+                      Tatoo: {report.identification}
+                    </div>
                     <h3>Found around: {report.foundPlace}</h3>
                   </Popup>
                 </Marker>

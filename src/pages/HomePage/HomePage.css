@@ -1,0 +1,31 @@
+.homePageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.buttonsHolder {
+  display: flex;
+  gap: 20px;
+}
+
+.homepageButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #42978a;
+  color: #ffffff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.homepageButton:hover {
+  background-color: #327168;
+}
+
+.mapHolder {
+  margin-top: 20px;
+}

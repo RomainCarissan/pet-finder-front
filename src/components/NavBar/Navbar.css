@@ -1,4 +1,4 @@
-.Navbar {
+/* .Navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,4 +24,57 @@
     height: 1px;
     background-color: #c5c5ce;
   }
+} */
+
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #42978a;
+  color: #fff;
+  box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.1);
+}
+
+.leftNavBarSide,
+.rightNavBarSide {
+  display: flex;
+  align-items: center;
+}
+
+.leftLinks,
+.rightLinks {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.leftLinks li,
+.rightLinks li {
+  margin-right: 15px;
+}
+
+.Navbar a,
+.Navbar h1,
+.Navbar button {
+  text-decoration: none;
+  color: #fff;
+}
+
+.Navbar h1 {
+  font-size: 1.5em;
+}
+
+.Navbar button {
+  background-color: #327168;
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.Navbar button:hover {
+  background-color: #215449;
 }

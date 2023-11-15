@@ -6,18 +6,23 @@ import Layout from "./layouts/Layout.jsx";
 import LoggedOutUser from "./navigation/LoggedOutUser.jsx";
 import LoggedInUser from "./navigation/LoggedInUser.jsx";
 
-import HomePage from "./pages/HomePage.jsx";
+import HomePage from "./pages/HomePage/HomePage.jsx";
 import ProfilPage from "./pages/ProfilPage.jsx";
-import SignupPage from "./pages/SignupPage.jsx";
-import LoginPage from "./pages/LoginPage.jsx";
+
+import SignupPage from "./pages/SignupPage/SignupPage.jsx";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+
 import FoundPetPage from "./pages/FoundPetPage.jsx";
 import LostPetPage from "./pages/LostPetPage.jsx";
+
 import FoundPetFormPage from "./pages/FoundPetFormPage.jsx";
 import LostPetFormPage from "./pages/LostPetFormPage.jsx";
-import OneLostPetPage from "./pages/OneLostPetPage.jsx";
-import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
+
 import UpdateLostFormPage from "./pages/UpdateLostFormPage.jsx";
 import UpdateFoundFormPage from "./pages/UpdateFoundFormPage.jsx";
+
+import OneLostPetPage from "./pages/OneLostPetPage.jsx";
+import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
 
 function App() {
   return (

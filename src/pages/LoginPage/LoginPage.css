@@ -1,0 +1,51 @@
+.titleInput {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.formInput {
+  min-width: 22rem;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.formInput div {
+  margin-bottom: 15px;
+}
+
+.labelSignIn {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.inputSignIn {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.buttonSignIn {
+  width: 100%;
+  padding: 10px;
+  background-color: #42978a;
+  color: #fff;
+  margin-top: 9px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.buttonSignIn:hover {
+  background-color: #327168;
+}
+
+.error {
+  color: #e74c3c;
+  margin-top: 10px;
+  text-align: center;
+}

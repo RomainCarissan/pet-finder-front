@@ -13,20 +13,25 @@ function Navbar() {
   console.log(user);
   return (
     <div className="Navbar">
-      <nav>
-        <ul>
+      <nav className="leftNavBarSide">
+        <ul className="leftLinks">
           <li>
             <NavLink to="/">Home</NavLink>
-
-            <NavLink to="/my-profil">My Profil</NavLink>
+          </li>
+          <li>
+            {isLoggedIn ? (
+              <NavLink to="/my-profil">My Profil</NavLink>
+            ) : (
+              <NavLink to="/login">My Profil</NavLink>
+            )}
           </li>
         </ul>
       </nav>
       <Link to="/">
         <h1>PetFinder</h1>
       </Link>
-      <nav>
-        <ul>
+      <nav className="rightNavBarSide">
+        <ul className="rightLinks">
           {isLoggedIn ? (
             <li>
               <button onClick={handleLogout}>Logout</button>
