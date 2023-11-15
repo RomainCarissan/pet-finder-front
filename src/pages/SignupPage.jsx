@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [adress, setAdress] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [department, setDepartment] = useState("");
   const [password, setPassword] = useState("");
@@ -16,8 +16,8 @@ function SignupPage() {
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handleName = (e) => setName(e.target.value);
-  const handleSurname = (e) => setSurname(e.target.value);
-  const handleAdress = (e) => setAdress(e.target.value);
+  const handleLastName = (e) => setLastName(e.target.value);
+  const handleAddress = (e) => setAddress(e.target.value);
   const handlePhone = (e) => setPhone(e.target.value);
   const handleDepartment = (e) => setDepartment(e.target.value);
   const handlePassword = (e) => setPassword(e.target.value);
@@ -29,8 +29,8 @@ function SignupPage() {
       password,
       email,
       name,
-      surname,
-      adress,
+      lastName,
+      address,
       phone,
       department,
     };
@@ -74,13 +74,13 @@ function SignupPage() {
           autoComplete="off"
         />
         <div>
-          <label htmlFor="surname">Surname</label>
+          <label htmlFor="lastName">lastName</label>
           <input
             type="text"
-            name="surname"
-            id="surname"
-            value={surname}
-            onChange={handleSurname}
+            name="lastName"
+            id="lastName"
+            value={lastName}
+            onChange={handleLastName}
             autoComplete="off"
           />
         </div>
@@ -96,13 +96,13 @@ function SignupPage() {
           />
         </div>
         <div>
-          <label htmlFor="adress">Adress</label>
+          <label htmlFor="address">Address</label>
           <input
             type="text"
-            name="adress"
-            id="adress"
-            value={adress}
-            onChange={handleAdress}
+            name="address"
+            id="address"
+            value={address}
+            onChange={handleAddress}
             autoComplete="off"
           />
         </div>
@@ -245,8 +245,8 @@ function SignupPage() {
 /* function SignupPage() {
   const emailInput = useRef();
   const nameInput = useRef();
-  const surnameInput = useRef();
-  const adressInput = useRef();
+  const lastNameInput = useRef();
+  const addressInput = useRef();
   const phoneInput = useRef();
   const departmentInput = useRef();
   const passwordInput = useRef();
@@ -258,8 +258,8 @@ function SignupPage() {
     event.preventDefault();
     const email = emailInput.current.value;
     const name = nameInput.current.value;
-    const surname = surnameInput.current.value;
-    const adress = adressInput.current.value;
+    const lastName = lastNameInput.current.value;
+    const address = addressInput.current.value;
     const phone = phoneInput.current.value;
     const department = departmentInput.current.value;
     const password = passwordInput.current.value;
@@ -268,8 +268,8 @@ function SignupPage() {
     const fd = new FormData();
     fd.append("email", email);
     fd.append("name", name);
-    fd.append("surname", surname);
-    fd.append("adress", adress);
+    fd.append("lastName", lastName);
+    fd.append("address", address);
     fd.append("phone", phone);
     fd.append("department", department);
     fd.append("password", password);
@@ -298,12 +298,12 @@ function SignupPage() {
         <input type="text" ref={nameInput} id="name" autoComplete="off" />
       </div>
       <div>
-        <label htmlFor="surname">Surname: </label>
-        <input type="text" ref={surnameInput} id="surname" autoComplete="off" />
+        <label htmlFor="lastName">lastName: </label>
+        <input type="text" ref={lastNameInput} id="lastName" autoComplete="off" />
       </div>
       <div>
-        <label htmlFor="adress">Adress: </label>
-        <input type="text" ref={adressInput} id="adress" autoComplete="off" />
+        <label htmlFor="address">Address: </label>
+        <input type="text" ref={addressInput} id="address" autoComplete="off" />
       </div>
       <div>
         <label htmlFor="phone">Phone: </label>

@@ -60,6 +60,8 @@ function FoundPetFormPage() {
     fd.append("description", description);
     fd.append("foundPlace", reportPlace);
     fd.append("latLon", coordonates);
+    fd.append("lat", coordonates[0]);
+    fd.append("lon", coordonates[1]);
 
     try {
       const response = await myApi.post("/api/foundpets", fd);

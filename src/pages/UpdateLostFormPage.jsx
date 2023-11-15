@@ -2,6 +2,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import myApi from "../service/service.js";
+import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput.jsx";
 import {
   DogFormBreeds,
   DogFormColors,
@@ -49,15 +50,22 @@ function UpdateLostFormPage() {
   const ageUnitInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
-  const lossPlaceInput = useRef();
+  const reportPlaceInput = useRef();
+  const [coordonates, setCoordinates] = useState(null);
+  const [defaultPlace, setDefaultPlace] = useState(null);
 
   // Ensure that petData is available before setting the value of petTypeInput
   useEffect(() => {
     if (petData) {
       setPetTypeInput(petData["petType"]);
+      setDefaultPlace(petData["lossPlace"]);
     }
   }, [petData]);
 
+  const updateCoordinates = (coord) => {
+    setCoordinates(coord);
+    //console.log(coord);
+  };
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
@@ -78,7 +86,7 @@ function UpdateLostFormPage() {
     const ageUnit = ageUnitInput.current.value;
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
-    const lossPlace = lossPlaceInput.current.value;
+    const reportPlace = reportPlaceInput.current.value;
 
     const fd = new FormData();
     fd.append("petName", petName);
@@ -93,7 +101,11 @@ function UpdateLostFormPage() {
     fd.append("age", age);
     fd.append("ageUnit", ageUnit);
     fd.append("description", description);
-    fd.append("lossPlace", lossPlace);
+    fd.append("lossPlace", reportPlace);
+    //fd.append("latLon", JSON.stringify(coordonates));
+    if (coordonates) {
+      fd.append("latLon", coordonates);
+    }
     if (picture) {
       fd.append("picture", picture);
     }
@@ -295,7 +307,7 @@ function UpdateLostFormPage() {
             ></textarea>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="lossPlace">Loss Place: </label>
             <input
               type="text"
@@ -303,6 +315,15 @@ function UpdateLostFormPage() {
               id="lossPlace"
               defaultValue={petData["lossPlace"]}
             />
+          </div> */}
+
+          <div>
+            <label htmlFor="reportPlace">Found Place: </label>
+            <SearchPlaceInput
+              placeInput={reportPlaceInput}
+              updateCoordinates={updateCoordinates}
+              defaultValue={defaultPlace}
+            ></SearchPlaceInput>
           </div>
 
           <div>

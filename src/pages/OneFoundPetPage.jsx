@@ -32,6 +32,11 @@ function OneFoundPetPage() {
       </p>
     );
   }
+  const formattedDate = new Intl.DateTimeFormat(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(oneFoundReport.foundDate));
 
   return (
     <>
@@ -48,10 +53,18 @@ function OneFoundPetPage() {
             <p className="FoundPlace">
               Found around : {oneFoundReport.foundPlace}
             </p>
-            <p className="FoundDate"> {oneFoundReport.foundDate}</p>
+            <p className="FoundDate"> {formattedDate}</p>
             <p className="Description">
               Description : {oneFoundReport.description}
             </p>
+            <h4>
+              Found by: {oneFoundReport.creator.name}{" "}
+              {oneFoundReport.creator.lastName}
+            </h4>
+            <h4>
+              phone: {oneFoundReport.creator.phone} <br />
+              address: {oneFoundReport.creator.address}
+            </h4>
           </div>
         </div>
       </div>

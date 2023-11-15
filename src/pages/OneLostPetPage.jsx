@@ -33,6 +33,12 @@ function OneLostPetPage() {
     );
   }
 
+  const formattedDate = new Intl.DateTimeFormat(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(oneLossReport.lossDate));
+
   return (
     <>
       <h1>OneLossPetPage</h1>
@@ -46,10 +52,18 @@ function OneLostPetPage() {
             />
             <h2>{oneLossReport.petName}</h2>
             <p className="LossPlace">Lost around : {oneLossReport.lossPlace}</p>
-            <p className="LossDate"> {oneLossReport.lossDate}</p>
+            <p className="LossDate"> {formattedDate}</p>
             <p className="Description">
               Description : {oneLossReport.description}
             </p>
+            <h4>
+              Found by: {oneLossReport.creator.name}{" "}
+              {oneLossReport.creator.lastName}
+            </h4>
+            <h4>
+              phone: {oneLossReport.creator.phone} <br />
+              address: {oneLossReport.creator.address}
+            </h4>
           </div>
         </div>
       </div>

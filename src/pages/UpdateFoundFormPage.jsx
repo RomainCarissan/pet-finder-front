@@ -10,6 +10,7 @@ import ExoticFormBreeds from "../components/FormTypes/ExoticFormType.jsx";
 function UpdateFoundFormPage() {
   const { user, isLoggedIn } = useAuth();
   const { id } = useParams();
+  console.log(id);
   const navigate = useNavigate();
 
   const [petData, setPetData] = useState(null);
@@ -20,6 +21,7 @@ function UpdateFoundFormPage() {
       try {
         const response = await myApi.get(`/api/foundpets/${id}`);
         setPetData(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log(error.response);
         setError("Failed to fetch previous pet data");
@@ -39,29 +41,24 @@ function UpdateFoundFormPage() {
   /* const mixedInput = useRef(); */
   const colorsInput = useRef();
   const breedInput = useRef();
-  const ageInput = useRef();
-  const ageUnitInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const reportPlaceInput = useRef();
   const [coordonates, setCoordinates] = useState(null);
+  const [defaultPlace, setDefaultPlace] = useState(null);
 
   // Ensure that petData is available before setting the value of petTypeInput
   useEffect(() => {
     if (petData) {
       setPetTypeInput(petData["petType"]);
+      setDefaultPlace(petData["foundPlace"]);
     }
   }, [petData]);
 
-  const defaultPlace = {
-    LossForm: petData["lossPlace"],
-    FoundForm: petData["foundPlace"],
-  };
   const updateCoordinates = (coord) => {
     setCoordinates(coord);
     console.log(coord);
   };
-  console.log(coordonates);
 
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
@@ -78,8 +75,6 @@ function UpdateFoundFormPage() {
     const breed = breedInput.current.value;
     /* const mixed = mixedInput.current.value; */
     const colors = colorsInput.current.value;
-    const age = ageInput.current.value;
-    const ageUnit = ageUnitInput.current.value;
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
     const reportPlace = reportPlaceInput.current.value;
@@ -94,11 +89,12 @@ function UpdateFoundFormPage() {
     fd.append("breed", breed);
     /*  fd.append("mixed", mixed); */
     fd.append("colors", colors);
-    fd.append("age", age);
-    fd.append("ageUnit", ageUnit);
     fd.append("description", description);
     fd.append("foundPlace", reportPlace);
-    fd.append("latLon", coordonates);
+    //fd.append("latLon", JSON.stringify(coordonates));
+    if (coordonates) {
+      fd.append("latLon", coordonates);
+    }
     if (picture) {
       fd.append("picture", picture);
     }
@@ -106,7 +102,7 @@ function UpdateFoundFormPage() {
     try {
       const response = await myApi.put(`/api/foundpets/${id}`, fd);
       console.log("found-pet added", response);
-      navigate(`foundpets/${id}`);
+      navigate(`/found-pet/${id}`);
     } catch (error) {
       console.log(error.response);
       setError(error.response.data.message);
@@ -259,7 +255,7 @@ function UpdateFoundFormPage() {
             <SearchPlaceInput
               placeInput={reportPlaceInput}
               updateCoordinates={updateCoordinates}
-              defaultValue={defaultPlace.LossForm || defaultPlace.FoundForm}
+              defaultValue={defaultPlace}
             ></SearchPlaceInput>
           </div>
           <div>

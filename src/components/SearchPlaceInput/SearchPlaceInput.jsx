@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useEffect } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import myGeoApikey from "../../service/service.js";
 import axios from "axios";
 function SearchPlaceInput({ placeInput, updateCoordinates, defaultValue }) {
   const [suggestions, setSuggestions] = useState([]);
@@ -34,7 +35,6 @@ function SearchPlaceInput({ placeInput, updateCoordinates, defaultValue }) {
             features[0].properties.lat,
             features[0].properties.lon,
           ];
-
           /*const { housenumber, street, county, city, country, lon, lat } =
             properties;
 
@@ -59,19 +59,21 @@ function SearchPlaceInput({ placeInput, updateCoordinates, defaultValue }) {
           const concatenatedAddresses = firstFourFeatures.map((feature) => {
             const properties = feature.properties;
             const {
-              housenumber,
+              /* housenumber,
               street,
               county,
               city,
               country,
               lat,
               lon,
-              name,
+              name, */
+              formatted,
             } = properties;
 
-            return [name, housenumber, street, city, county, country]
+            /* return [name, housenumber, street, city, county, country]
               .filter((value) => value !== undefined && value !== null)
-              .join(" ");
+              .join(" "); */
+            return formatted;
           });
 
           setCoordonates(suggestionCoordinates);
@@ -101,7 +103,11 @@ function SearchPlaceInput({ placeInput, updateCoordinates, defaultValue }) {
       <input
         type="text"
         list="suggestions"
-        value={defaultValue || address}
+        /* value={
+          address === "" ? (defaultValue !== null ? defaultValue : "") : ""
+        } */
+        //value={defaultValue !== null ? address : ""}
+        value={address || (defaultValue !== null ? defaultValue : "")}
         onChange={handleChange}
         ref={placeInput}
       />

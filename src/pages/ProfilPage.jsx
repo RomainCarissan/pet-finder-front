@@ -45,7 +45,7 @@ function ProfilPage() {
   };
 
   const handleUpdateLossForm = (id) => {
-    navigate(`/found-pet-form-update/${id}`);
+    navigate(`/lost-pet-form-update/${id}`);
   };
 
   const handleUpdateFoundForm = (id) => {
@@ -64,6 +64,7 @@ function ProfilPage() {
     <>
       {personalLossReports &&
         personalLossReports.map((lostPet) => {
+          //console.log(lostPet);
           return (
             <React.Fragment key={lostPet._id}>
               <div className="lostPet">

@@ -17,7 +17,7 @@ import LostPetFormPage from "./pages/LostPetFormPage.jsx";
 import OneLostPetPage from "./pages/OneLostPetPage.jsx";
 import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
 import UpdateLostFormPage from "./pages/UpdateLostFormPage.jsx";
-import UpdateFoundFormPage from "./pages/UpdateLostFormPage.jsx";
+import UpdateFoundFormPage from "./pages/UpdateFoundFormPage.jsx";
 
 function App() {
   return (
