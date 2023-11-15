@@ -76,8 +76,19 @@ function ProfilPage() {
                 </div>
                 <div className="lostPet-info">
                   <h3>{lostPet.petName}</h3>
-                  <h4>lost around: {lostPet.lossPlace}</h4>
                   {/* <h4>{lostPet.lossDate}</h4> */}
+                  <h4>lost around: {lostPet.lossPlace}</h4>
+                  <h4>{lostPet.petType}</h4>
+                  <h4>{lostPet.petSex}</h4>
+                  <h4>{lostPet.breed}</h4>
+                  <h4>{lostPet.mixed}</h4>
+                  <h4>{lostPet.colors}</h4>
+                  <h4>{lostPet.sterilized}</h4>
+                  <h4>{lostPet.identification}</h4>
+                  <h4>
+                    {lostPet.age} {lostPet.ageUnit}
+                  </h4>
+                  <h4>{lostPet.description}</h4>
                 </div>
               </div>
               {lostPet.creator === userId && (
@@ -110,8 +121,19 @@ function ProfilPage() {
                 </div>
                 <div className="foundPet-info">
                   <h3>{foundPet.petName}</h3>
+                  {/* <h4>{foundPet.foundDate}</h4> */}
                   <h4>found around: {foundPet.foundPlace}</h4>
-                  {/* <h4>{foundPet.lossDate}</h4> */}
+                  <h4>{foundPet.petType}</h4>
+                  <h4>{foundPet.petSex}</h4>
+                  <h4>{foundPet.breed}</h4>
+                  <h4>{foundPet.mixed}</h4>
+                  <h4>{foundPet.colors}</h4>
+                  <h4>{foundPet.sterilized}</h4>
+                  <h4>{foundPet.identification}</h4>
+                  <h4>
+                    {foundPet.age} {foundPet.ageUnit}
+                  </h4>
+                  <h4>{foundPet.description}</h4>
                 </div>
               </div>
               {foundPet.creator === userId && (

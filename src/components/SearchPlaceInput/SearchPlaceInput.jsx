@@ -1,82 +1,118 @@
 import { useRef, useState } from "react";
+import { useEffect } from "react";
 import PlacesAutocomplete from "react-places-autocomplete";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import axios from "axios";
-function SearchPlaceInput() {
+function SearchPlaceInput({ placeInput, updateCoordinates, defaultValue }) {
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  //const [selectedAddress, setSelectedAddress] = useState("");
   const [address, setAddress] = useState("");
-  const [coordinates, setCoordinates] = useState({
-    lat: null,
-    lng: null,
-  });
+  const [coordonates, setCoordonates] = useState(null);
 
-  // const handleSelect = async (value) => {
-  //   const result = await geocodeByAddress(value);
-  //   const ll = await getLatLng(result[0]);
-  //   console.log(ll);
-  //   setAddress(value);
-  //   setCoordinates(ll);
-  // };
-  const handleChange = (e) => {
-    axios
-      .get("https://geocode.maps.co/search?q=" + e.target.value)
-      .then((res) => {
-        console.log(res.data[0]);
-        /* const latLong = [res.data[0].lat, res.data[0].lon];
-        setAddress(res.data[0].display_name);
-        console.log(res.data[0].display_name);
-        console.log(latLong); */
-      })
-      .catch(console.log);
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return function (...args) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
   };
+
+  const delayedAPICall = debounce((inputValue) => {
+    setLoading(true);
+    axios
+      .get(
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${inputValue}&apiKey=211d3fb8da2745ef80e459dee5d35c87 `
+      )
+      .then((res) => {
+        console.log("API Response:", res.data);
+        const features = res.data.features;
+        if (features.length > 0) {
+          //const properties = features[0].properties;
+          const firstFourFeatures = features.slice(0, 4);
+          const suggestionCoordinates = [
+            features[0].properties.lat,
+            features[0].properties.lon,
+          ];
+
+          /*const { housenumber, street, county, city, country, lon, lat } =
+            properties;
+
+           console.log("House Number:", properties.housenumber);
+          console.log("Street:", properties.street);
+          console.log("City:", city);
+          console.log("County:", properties.county); 
+          console.log("Longitude:", lon);
+          console.log("Latitude:", lat);*/
+
+          /* const concatenatedAddress = [
+            housenumber,
+            street,
+            city,
+            county,
+            country,
+          ] 
+            .filter((value) => value !== undefined && value !== null)
+            .join(" ");
+
+          setSuggestions([concatenatedAddress]); */
+          const concatenatedAddresses = firstFourFeatures.map((feature) => {
+            const properties = feature.properties;
+            const {
+              housenumber,
+              street,
+              county,
+              city,
+              country,
+              lat,
+              lon,
+              name,
+            } = properties;
+
+            return [name, housenumber, street, city, county, country]
+              .filter((value) => value !== undefined && value !== null)
+              .join(" ");
+          });
+
+          setCoordonates(suggestionCoordinates);
+          setSuggestions(concatenatedAddresses);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching suggestions:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, 300);
+
+  useEffect(() => {
+    updateCoordinates(coordonates);
+  }, [coordonates, updateCoordinates]);
+
+  const handleChange = (e) => {
+    const inputValue = e.target.value;
+    setAddress(inputValue);
+    delayedAPICall(inputValue);
+  };
+
   return (
     <>
-      <div>
-        <input type="text" value={address} onChange={handleChange} />
+      <input
+        type="text"
+        list="suggestions"
+        value={defaultValue || address}
+        onChange={handleChange}
+        ref={placeInput}
+      />
 
-        {/* <PlacesAutocomplete
-          value={address}
-          onChange={setAddress}
-          onSelect={handleSelect}
-        >
-          {({
-            getInputProps,
-            suggestions,
-            getSuggestionItemProps,
-            loading,
-          }) => (
-            <div key={suggestions}>
-              <input
-                {...getInputProps({
-                  placeholder: "Search Places ...",
-                  className: "location-search-input",
-                })}
-              />
-              <div className="autocomplete-dropdown-container">
-                {loading && <div>Loading...</div>}
-                {suggestions.map((suggestion) => {
-                  const className = suggestion.active
-                    ? "suggestion-item--active"
-                    : "suggestion-item";
-                  const style = suggestion.active
-                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                    : { backgroundColor: "#ffffff", cursor: "pointer" };
-                  return (
-                    <div
-                      key={suggestion}
-                      {...getSuggestionItemProps(suggestion, {
-                        className,
-                        style,
-                      })}
-                    >
-                      <span>{suggestion.description}</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </PlacesAutocomplete> */}
-      </div>
+      <datalist id="suggestions">
+        {suggestions.map((suggestion, index) => (
+          <option key={index} value={suggestion}>
+            {suggestion}
+          </option>
+        ))}
+      </datalist>
     </>
   );
 }

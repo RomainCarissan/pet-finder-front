@@ -92,9 +92,11 @@ function UpdateLostFormPage() {
     fd.append("colors", colors);
     fd.append("age", age);
     fd.append("ageUnit", ageUnit);
-    fd.append("picture", picture);
     fd.append("description", description);
     fd.append("lossPlace", lossPlace);
+    if (picture) {
+      fd.append("picture", picture);
+    }
 
     try {
       const response = await myApi.put(`/api/lostpets/${id}`, fd);

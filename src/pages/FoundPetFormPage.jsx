@@ -8,6 +8,9 @@ import { CatFormColors } from "../components/FormTypes/CatFormType.jsx";
 import ExoticFormBreeds from "../components/FormTypes/ExoticFormType.jsx";
 
 function FoundPetFormPage() {
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const islostState = useState("true");
   const petNameInput = useRef();
   const foundDateInput = useRef();
@@ -19,14 +22,18 @@ function FoundPetFormPage() {
   const colorsInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
-  const foundPlaceInput = useRef();
-  const [error, setError] = useState("");
+  const reportPlaceInput = useRef();
+  const [coordonates, setCoordinates] = useState(null);
+
+  const updateCoordinates = (coord) => {
+    setCoordinates(coord);
+    console.log(coord);
+  };
+  console.log(coordonates);
 
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
-
-  const navigate = useNavigate();
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -39,7 +46,7 @@ function FoundPetFormPage() {
     const colors = colorsInput.current.value;
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
-    const foundPlace = foundPlaceInput.current.value;
+    const reportPlace = reportPlaceInput.current.value;
 
     const fd = new FormData();
     fd.append("petName", petName);
@@ -51,7 +58,8 @@ function FoundPetFormPage() {
     fd.append("colors", colors);
     fd.append("picture", picture);
     fd.append("description", description);
-    fd.append("foundPlace", foundPlace);
+    fd.append("foundPlace", reportPlace);
+    fd.append("latLon", coordonates);
 
     try {
       const response = await myApi.post("/api/foundpets", fd);
@@ -185,7 +193,11 @@ function FoundPetFormPage() {
             <input type="text" ref={foundPlaceInput} id="foundPlace" />
           </div> */}
           <div>
-            <SearchPlaceInput></SearchPlaceInput>
+            <label htmlFor="reportPlace">Found Place: </label>
+            <SearchPlaceInput
+              placeInput={reportPlaceInput}
+              updateCoordinates={updateCoordinates}
+            ></SearchPlaceInput>
           </div>
           <div>
             <button type="submit">Submit</button>

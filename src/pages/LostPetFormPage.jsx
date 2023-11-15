@@ -11,8 +11,12 @@ import {
   CatFormColors,
 } from "../components/FormTypes/CatFormType";
 import ExoticFormBreeds from "../components/FormTypes/ExoticFormType";
+import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput";
 
 function LostPetFormPage() {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
   const islostState = useState("true");
   const petNameInput = useRef();
   const lossDateInput = useRef();
@@ -28,10 +32,14 @@ function LostPetFormPage() {
   const ageUnitInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
-  const lossPlaceInput = useRef();
-  const [error, setError] = useState("");
+  const reportPlaceInput = useRef();
+  const [coordonates, setCoordinates] = useState(null);
 
-  const navigate = useNavigate();
+  const updateCoordinates = (coord) => {
+    setCoordinates(coord);
+    console.log(coord);
+  };
+  console.log(coordonates);
 
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
@@ -52,7 +60,7 @@ function LostPetFormPage() {
     const ageUnit = ageUnitInput.current.value;
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
-    const lossPlace = lossPlaceInput.current.value;
+    const reportPlace = reportPlaceInput.current.value;
 
     const fd = new FormData();
     fd.append("petName", petName);
@@ -68,7 +76,8 @@ function LostPetFormPage() {
     fd.append("ageUnit", ageUnit);
     fd.append("picture", picture);
     fd.append("description", description);
-    fd.append("lossPlace", lossPlace);
+    fd.append("lossPlace", reportPlace);
+    fd.append("latLon", coordonates);
 
     try {
       const response = await myApi.post("/api/lostpets", fd);
@@ -230,9 +239,17 @@ function LostPetFormPage() {
             ></textarea>
           </div>
 
-          <div>
+          {/* <div>
             <label htmlFor="lossPlace">Loss Place: </label>
             <input type="text" ref={lossPlaceInput} id="lossPlace" />
+          </div> */}
+
+          <div>
+            <label htmlFor="reportPlace">Loss Place: </label>
+            <SearchPlaceInput
+              placeInput={reportPlaceInput}
+              updateCoordinates={updateCoordinates}
+            ></SearchPlaceInput>
           </div>
 
           <div>
