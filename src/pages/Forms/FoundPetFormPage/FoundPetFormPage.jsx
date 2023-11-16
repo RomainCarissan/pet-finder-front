@@ -1,17 +1,20 @@
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../../../context/AuthContext.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import myApi from "../service/service.js";
-import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput.jsx";
-import { DogFormColors } from "../components/FormTypes/DogFormType.jsx";
-import { CatFormColors } from "../components/FormTypes/CatFormType.jsx";
-import ExoticFormBreeds from "../components/FormTypes/ExoticFormType.jsx";
+import myApi from "../../../service/service.js";
+import "../PetFormPage.css";
+import SearchPlaceInput from "../../../components/SearchPlaceInput/SearchPlaceInput.jsx";
+import { DogFormColors } from "../../../components/FormTypes/DogFormType.jsx";
+import { CatFormColors } from "../../../components/FormTypes/CatFormType.jsx";
+import ExoticFormBreeds from "../../../components/FormTypes/ExoticFormType.jsx";
 
 function FoundPetFormPage() {
-  const navigate = useNavigate();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
 
-  const islostState = useState("true");
   const petNameInput = useRef();
   const foundDateInput = useRef();
   /* const petTypeInput = useRef() */
@@ -87,10 +90,10 @@ function FoundPetFormPage() {
   }
   return (
     <>
-      <h1>foundPetFormPage</h1>
-      <div>
-        <form onSubmit={handleSubmit}>
-          <div>
+      <div className="reportPetFormContainer">
+        <h1>Report a found pet!</h1>
+        <form onSubmit={handleSubmit} className="reportPetForm">
+          <div className="formField">
             <label htmlFor="petName">Name of the Pet: </label>
             <input
               type="text"
@@ -100,12 +103,12 @@ function FoundPetFormPage() {
             />
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="foundDate">Found Date: </label>
             <input type="date" ref={foundDateInput} id="foundDate" />
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="petType">Type of Pet: </label>
             <select
               value={petTypeInput}
@@ -123,7 +126,7 @@ function FoundPetFormPage() {
             </select>
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="petSex">Pet Sex: </label>
             <select ref={petSexInput} id="petSex" required="required">
               <option value="" disabled>
@@ -135,7 +138,7 @@ function FoundPetFormPage() {
             </select>
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="breed">Breed: </label>
             <select type="text" ref={breedInput} id="breed">
               {petTypeInput == !"Exotic" && (
@@ -147,7 +150,7 @@ function FoundPetFormPage() {
             </select>
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="identification">Identification: </label>
             <input
               type="text"
@@ -157,7 +160,7 @@ function FoundPetFormPage() {
             />
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="colors">Colors: </label>
             <select
               type="text"
@@ -174,12 +177,12 @@ function FoundPetFormPage() {
             </select>
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="picture">Picture: </label>
             <input type="file" ref={pictureInput} id="picture" />
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="description">Description: </label>
             <textarea
               rows="3"
@@ -190,19 +193,20 @@ function FoundPetFormPage() {
             ></textarea>
           </div>
 
-          {/* <div>
-            <label htmlFor="foundPlace">Found Place: </label>
-            <input type="text" ref={foundPlaceInput} id="foundPlace" />
-          </div> */}
-          <div>
+          <div className="formField">
             <label htmlFor="reportPlace">Found Place: </label>
             <SearchPlaceInput
               placeInput={reportPlaceInput}
               updateCoordinates={updateCoordinates}
             ></SearchPlaceInput>
           </div>
-          <div>
-            <button type="submit">Submit</button>
+          <div className="formField">
+            <button type="submit" className="submitBtn">
+              Submit
+            </button>
+            <button className="cancelBtn" onClick={goBack}>
+              Cancel
+            </button>
           </div>
           <p className="error">{error}</p>
         </form>

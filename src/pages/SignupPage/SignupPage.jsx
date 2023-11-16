@@ -239,7 +239,7 @@ function SignupPage() {
 
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
-        <p>Already have an account?</p>
+        <p className="loginRedirection">Already have an account?</p>
         <Link to={"/login"} className="login-link">
           Log in
         </Link>

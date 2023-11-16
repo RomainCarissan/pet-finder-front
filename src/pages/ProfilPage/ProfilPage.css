@@ -1,0 +1,54 @@
+.myProfilDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.onePersonalLossReport {
+  width: 20rem;
+  border: 6px solid #c2133f;
+  border-radius: 8px;
+  overflow: hidden;
+  /* flex: 1; */
+}
+
+.onePersonalFoundReport {
+  width: 20rem;
+  border: 6px solid #41ad60;
+  border-radius: 8px;
+  overflow: hidden;
+  /* flex: 1; */
+}
+
+.myReportDisplay {
+  display: flex;
+  flex-direction: column;
+}
+
+.myReport-img img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.myReport-info {
+  padding: 1rem;
+}
+
+.myReport-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 23px;
+  background-color: #f4f4f4;
+  border-top: 1px solid #ddd;
+}
+
+.myReport-actions div {
+  cursor: pointer;
+  margin-left: 10px;
+}

@@ -1,10 +1,14 @@
-import { useAuth } from "../context/AuthContext.jsx";
-import { Link } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext.jsx";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import myApi from "../service/service.js";
+import myApi from "../../../service/service.js";
+import "../ReportsPages.css";
 
 function FoundPetPage() {
   const [foundReports, setFoundReports] = useState(null);
+  const navigate = useNavigate();
+  const toHomePage = () => navigate(`/`);
+  const toLostForm = () => navigate(`/lost-pet-form`);
 
   //fetch all the found reports so the owner of a lost pet can see if there is any reports about his loss
   async function fetchAllFoundReports() {
@@ -23,42 +27,39 @@ function FoundPetPage() {
 
   if (!isLoggedIn) {
     return (
-      <p>
+      <p className="loginPrompt">
         Please <Link to="/login">Log in</Link>
       </p>
     );
   }
   return (
     <>
-      <div>
-        <Link to="/lost-pet-form">
-          <button>Report a loss</button>
-        </Link>
+      <div className="btnHolder">
+        <button onClick={toHomePage} className="backBtn">
+          Go Back
+        </button>
+        <button onClick={toLostForm} className="toReportBtn">
+          Report a loss
+        </button>
       </div>
-      <div>
+      <div className="displayTitleReports">
         <h2>Lastly found pets</h2>
       </div>
-      <div className="container">
+      <div className="reportsContainer">
         {foundReports &&
           foundReports.map((foundPet) => {
             return (
               <Link
                 key={foundPet._id}
                 to={`/found-pet/${foundPet._id}`}
-                //data-hidden={foundPet.data_hidden ? foundPet.data_hidden : "false"}
+                className="reportCard"
               >
-                <div className="foundPet">
-                  <div className="foundPet-img">
-                    <img
-                      src={foundPet.picture}
-                      style={{ height: "10rem" }}
-                      alt={`${foundPet._id} Image`}
-                    />
-                  </div>
-                  <div className="foundPet-info">
-                    <h3>{foundPet.petName}</h3>
-                    <h4>Found aroud:{foundPet.foundPlace}</h4>
-                  </div>
+                <div className="reportCard-img">
+                  <img src={foundPet.picture} alt={`${foundPet._id} Image`} />
+                </div>
+                <div className="reportLossCard-info">
+                  <h3>{foundPet.petName}</h3>
+                  <h4>Found aroud:{foundPet.foundPlace}</h4>
                 </div>
               </Link>
             );

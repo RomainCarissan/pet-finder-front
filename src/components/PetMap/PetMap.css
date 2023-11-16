@@ -1,26 +1,3 @@
-/* .Popup {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.imageContainer {
-  margin-bottom: 10px;
-}
-
-.imageContainer img {
-  height: 5rem;
-}
-
-.infoContainer {
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-h3 {
-  margin-top: 10px;
-} */
-
 .leaflet-popup-content {
   max-width: 300px;
 }

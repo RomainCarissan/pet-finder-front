@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from "react";
 import myApi from "../../service/service";
 import L from "leaflet";
@@ -9,6 +9,13 @@ import "./PetMap.css";
 function PetMap() {
   const [allLossReports, setAllLossReports] = useState(null);
   const [allFoundReports, setAllFoundReports] = useState(null);
+  /* const navigate = useNavigate();
+  const toOneLostPage = (reportId) => {
+    navigate(`/lost-pet/${reportId}`);
+  };
+  const toOneFoundPage = (reportId) => {
+    navigate(`/found-pet/${reportId}`);
+  }; */
 
   async function fetchAllReports(endpoint, setDataFunction) {
     try {
@@ -56,12 +63,20 @@ function PetMap() {
     });
 
   return (
-    <>
+    <div>
       <MapContainer
         center={[46.603354, 1.8883335]}
         zoom={5}
         scrollWheelZoom={true}
-        style={{ height: "30rem", width: "35rem", borderRadius: "37px " }}
+        style={{
+          height: "30rem",
+          width: "35rem",
+          /* minHeight: "26rem",
+          minWidth: "20rem", */
+          borderRadius: "37px",
+          display: "flex",
+          flex: "1",
+        }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -85,10 +100,15 @@ function PetMap() {
                     </div>
                     <div className="infoContainer">
                       Name: {report.petName} <br />
-                      Lost since: {formatDate(report.lossDate)} <br />
+                      Lost since: {formatDate(report.lossDate)}
+                      <br />
                       Tatoo: {report.identification}
+                      <br />
+                      Lost around: {report.lossPlace}
                     </div>
-                    <h3>Lost around: {report.lossPlace}</h3>
+                    <Link to={`/lost-pet/${report._id}`}>
+                      <h3>More details</h3>
+                    </Link>
                   </Popup>
                 </Marker>
               </div>
@@ -114,15 +134,20 @@ function PetMap() {
                       Name: {report.petName} <br />
                       Found since: {formatDate(report.foundDate)} <br />
                       Tatoo: {report.identification}
+                      <br />
+                      Found around: {report.foundPlace}
                     </div>
-                    <h3>Found around: {report.foundPlace}</h3>
+                    <Link to={`/found-pet/${report._id}`}>
+                      <h3>More details</h3>
+                    </Link>
+                    <h3></h3>
                   </Popup>
                 </Marker>
               </div>
             );
           })}
       </MapContainer>
-    </>
+    </div>
   );
 }
 

@@ -1,0 +1,80 @@
+.oneReportPage {
+  padding: 20px;
+}
+
+.oneReportPage h1 {
+  text-align: center;
+}
+
+.backBtn {
+  /* margin-bottom: 20px;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer; */
+  background-color: #327168;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.backBtn:hover {
+  background-color: #47978b;
+}
+
+.containerOneReport {
+  display: flex;
+  margin-top: 2rem;
+}
+
+.photoReport {
+  flex: 1;
+  margin-right: 20px;
+  margin-bottom: 1rem;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  border-radius: 25px;
+}
+
+.infoReport {
+  flex: 2;
+}
+
+.infoLossName {
+  margin-top: -1rem;
+  margin-bottom: 10px;
+  color: #d74469;
+}
+
+.infoFoundName {
+  margin-top: -1rem;
+  margin-bottom: 10px;
+  color: #45b264;
+}
+
+.oneReportPlace,
+.oneReportDate,
+.OneReportDescription {
+  margin-bottom: 10px;
+}
+
+.creatorInfo h4 {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .containerOneReport {
+    flex-direction: column;
+  }
+
+  .photoReport {
+    margin-right: 0;
+  }
+}

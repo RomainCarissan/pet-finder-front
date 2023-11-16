@@ -7,22 +7,22 @@ import LoggedOutUser from "./navigation/LoggedOutUser.jsx";
 import LoggedInUser from "./navigation/LoggedInUser.jsx";
 
 import HomePage from "./pages/HomePage/HomePage.jsx";
-import ProfilPage from "./pages/ProfilPage.jsx";
+import ProfilPage from "./pages/ProfilPage/ProfilPage.jsx";
 
 import SignupPage from "./pages/SignupPage/SignupPage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 
-import FoundPetPage from "./pages/FoundPetPage.jsx";
-import LostPetPage from "./pages/LostPetPage.jsx";
+import FoundPetPage from "./pages/ReportsPages/FoundPetPage/FoundPetPage.jsx";
+import LostPetPage from "./pages/ReportsPages/LostPetPage/LostPetPage.jsx";
 
-import FoundPetFormPage from "./pages/FoundPetFormPage.jsx";
-import LostPetFormPage from "./pages/LostPetFormPage.jsx";
+import FoundPetFormPage from "./pages/Forms/FoundPetFormPage/FoundPetFormPage.jsx";
+import LostPetFormPage from "./pages/Forms/LostPetFormPage/LostPetFormPage.jsx";
 
-import UpdateLostFormPage from "./pages/UpdateLostFormPage.jsx";
-import UpdateFoundFormPage from "./pages/UpdateFoundFormPage.jsx";
+import UpdateLostFormPage from "./pages/Forms/UpdateLostFormPage/UpdateLostFormPage.jsx";
+import UpdateFoundFormPage from "./pages/Forms/UpdateFoundFormPage/UpdateFoundFormPage.jsx";
 
-import OneLostPetPage from "./pages/OneLostPetPage.jsx";
-import OneFoundPetPage from "./pages/OneFoundPetPage.jsx";
+import OneLostPetPage from "./pages/OneReportPages/OneLostPetPage/OneLostPetPage.jsx";
+import OneFoundPetPage from "./pages/OneReportPages/OneFoundPetPage/OneFoundPetPage.jsx";
 
 function App() {
   return (

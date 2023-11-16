@@ -1,17 +1,26 @@
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth } from "../../../context/AuthContext.jsx";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
-import myApi from "../service/service.js";
-import SearchPlaceInput from "../components/SearchPlaceInput/SearchPlaceInput.jsx";
-import { DogFormColors } from "../components/FormTypes/DogFormType.jsx";
-import { CatFormColors } from "../components/FormTypes/CatFormType.jsx";
-import ExoticFormBreeds from "../components/FormTypes/ExoticFormType.jsx";
+import myApi from "../../../service/service.js";
+import "../PetFormPage.css";
+import SearchPlaceInput from "../../../components/SearchPlaceInput/SearchPlaceInput.jsx";
+import {
+  DogFormBreeds,
+  DogFormColors,
+} from "../../../components/FormTypes/DogFormType.jsx";
+import {
+  CatFormBreeds,
+  CatFormColors,
+} from "../../../components/FormTypes/CatFormType.jsx";
+import ExoticFormBreeds from "../../../components/FormTypes/ExoticFormType.jsx";
 
-function UpdateFoundFormPage() {
+function UpdateLostFormPage() {
   const { user, isLoggedIn } = useAuth();
   const { id } = useParams();
-  console.log(id);
   const navigate = useNavigate();
+  const goBack = () => {
+    navigate(-1);
+  };
 
   const [petData, setPetData] = useState(null);
   const [error, setError] = useState("");
@@ -19,28 +28,29 @@ function UpdateFoundFormPage() {
   useEffect(() => {
     const fetchPetData = async () => {
       try {
-        const response = await myApi.get(`/api/foundpets/${id}`);
+        const response = await myApi.get(`/api/lostpets/${id}`);
         setPetData(response.data);
-        console.log(response.data);
       } catch (error) {
         console.log(error.response);
         setError("Failed to fetch previous pet data");
       }
     };
+
     fetchPetData();
   }, [id]);
 
-  const islostState = useState("true");
   const petNameInput = useRef();
-  const foundDateInput = useRef();
+  const lossDateInput = useRef();
   /* const petTypeInput = useRef(); */
   const [petTypeInput, setPetTypeInput] = useState("");
   const petSexInput = useRef();
-  /*  const sterilizedInput = useRef(); */
+  const sterilizedInput = useRef();
   const identificationInput = useRef();
-  /* const mixedInput = useRef(); */
+  const mixedInput = useRef();
   const colorsInput = useRef();
   const breedInput = useRef();
+  const ageInput = useRef();
+  const ageUnitInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const reportPlaceInput = useRef();
@@ -51,46 +61,52 @@ function UpdateFoundFormPage() {
   useEffect(() => {
     if (petData) {
       setPetTypeInput(petData["petType"]);
-      setDefaultPlace(petData["foundPlace"]);
+      setDefaultPlace(petData["lossPlace"]);
     }
   }, [petData]);
 
   const updateCoordinates = (coord) => {
     setCoordinates(coord);
-    console.log(coord);
+    //console.log(coord);
   };
-
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
 
   async function handleUpdateSubmit(event) {
     event.preventDefault();
+
     const petName = petNameInput.current.value;
-    const lossDate = foundDateInput.current.value;
+    const lossDate = lossDateInput.current.value;
     /* const petType = petTypeInput.current.value; */
     const petSex = petSexInput.current.value;
-    /* const sterilized = sterilizedInput.current.value; */
+    const sterilized = sterilizedInput.current.value;
     const identification = identificationInput.current.value;
     const breed = breedInput.current.value;
-    /* const mixed = mixedInput.current.value; */
+    const mixed = mixedInput.current.value;
     const colors = colorsInput.current.value;
+    const age = ageInput.current.value;
+    const ageUnit = ageUnitInput.current.value;
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
     const reportPlace = reportPlaceInput.current.value;
 
     const fd = new FormData();
     fd.append("petName", petName);
-    fd.append("lossDate", lossDate);
     fd.append("petType", petTypeInput);
     fd.append("petSex", petSex);
-    /* fd.append("sterilized", sterilized); */
+    fd.append("sterilized", sterilized);
     fd.append("identification", identification);
     fd.append("breed", breed);
-    /*  fd.append("mixed", mixed); */
+    fd.append("mixed", mixed);
     fd.append("colors", colors);
+    fd.append("age", age);
+    fd.append("ageUnit", ageUnit);
     fd.append("description", description);
-    fd.append("foundPlace", reportPlace);
+    fd.append("lossPlace", reportPlace);
+    if (lossDate) {
+      fd.append("lossDate", lossDate);
+    }
     //fd.append("latLon", JSON.stringify(coordonates));
     if (coordonates) {
       fd.append("latLon", coordonates);
@@ -100,9 +116,9 @@ function UpdateFoundFormPage() {
     }
 
     try {
-      const response = await myApi.put(`/api/foundpets/${id}`, fd);
-      console.log("found-pet added", response);
-      navigate(`/found-pet/${id}`);
+      const response = await myApi.put(`/api/lostpets/${id}`, fd);
+      console.log("lost-pet updated", response);
+      navigate(`/lost-pet/${id}`);
     } catch (error) {
       console.log(error.response);
       setError(error.response.data.message);
@@ -114,41 +130,42 @@ function UpdateFoundFormPage() {
 
   if (!isLoggedIn) {
     return (
-      <p>
+      <p className="loginPrompt">
         Please <Link to="/login">Log in</Link>
       </p>
     );
   }
+
   if (!petData) {
     return <p>Loading...</p>;
   }
   return (
     <>
-      <h1>foundPetFormPage</h1>
-      <div>
-        <form onSubmit={handleUpdateSubmit}>
-          <div>
+      <div className="reportPetFormContainer">
+        <h1>Edit my loss report</h1>
+        <form onSubmit={handleUpdateSubmit} className="reportPetForm">
+          <div className="formField">
             <label htmlFor="petName">Name of the Pet: </label>
             <input
               type="text"
               ref={petNameInput}
               id="petName"
               defaultValue={petData["petName"]}
-              placeholder="The name of the pet"
+              placeholder="The name of your pet"
             />
           </div>
 
-          <div>
-            <label htmlFor="foundDate">Found Date: </label>
+          <div className="formField">
+            <label htmlFor="lossDate">Loss Date: </label>
             <input
               type="date"
-              ref={foundDateInput}
-              id="foundDate"
-              defaultValue={petData["foundDate"]}
+              ref={lossDateInput}
+              id="lossDate"
+              defaultValue={petData["lossDate"]}
             />
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="petType">Type of Pet: </label>
             <select
               value={petTypeInput}
@@ -156,9 +173,7 @@ function UpdateFoundFormPage() {
               required="required"
               onChange={handlePetTypeChange}
             >
-              <option value="" disabled>
-                Select your response
-              </option>
+              <option value="">Select your response</option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Exotic">Exotic</option>
@@ -166,7 +181,7 @@ function UpdateFoundFormPage() {
             </select>
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="petSex">Pet Sex: </label>
             <select
               ref={petSexInput}
@@ -174,33 +189,27 @@ function UpdateFoundFormPage() {
               required="required"
               defaultValue={petData["petSex"]}
             >
-              <option value="" disabled>
-                Select your response
-              </option>
+              <option value="">Select your response</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-              <option value="I don't know">I don't know</option>
             </select>
           </div>
 
-          <div>
-            <label htmlFor="breed">Breed: </label>
+          <div className="formField">
+            <label htmlFor="sterilized">Sterilized: </label>
             <select
-              type="text"
-              ref={breedInput}
-              id="breed"
-              defaultValue={petData["breed"]}
+              ref={sterilizedInput}
+              id="sterilized"
+              required="required"
+              defaultValue={petData["sterilized"]}
             >
-              {petTypeInput == !"Exotic" && (
-                <option value="">No need to specify</option>
-              )}
-              {petTypeInput === "Exotic" && (
-                <ExoticFormBreeds></ExoticFormBreeds>
-              )}
+              <option value="">Select your response</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
             </select>
           </div>
 
-          <div>
+          <div className="formField">
             <label htmlFor="identification">Identification: </label>
             <input
               type="text"
@@ -211,30 +220,87 @@ function UpdateFoundFormPage() {
             />
           </div>
 
-          <div>
+          <div className="formField">
+            <label htmlFor="breed">Breed: </label>
+            <select
+              type="text"
+              ref={breedInput}
+              id="breed"
+              defaultValue={petData["breed"]}
+            >
+              {petTypeInput === "" && (
+                <option value="">Select the type of pet first</option>
+              )}
+              {petTypeInput === "Cat" && <CatFormBreeds></CatFormBreeds>}
+              {petTypeInput === "Dog" && <DogFormBreeds></DogFormBreeds>}
+              {petTypeInput === "Exotic" && (
+                <ExoticFormBreeds></ExoticFormBreeds>
+              )}
+            </select>
+          </div>
+
+          <div className="formField">
+            <label htmlFor="mixed">Mixed Breed: </label>
+            <select
+              ref={mixedInput}
+              id="mixed"
+              required="required"
+              defaultValue={petData["mixed"]}
+            >
+              <option value="">Select your response</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div className="formField">
             <label htmlFor="colors">Colors: </label>
             <select
               type="text"
               ref={colorsInput}
               id="colors"
-              defaultValue={petData["colors"]}
               required="required"
+              defaultValue={petData["colors"]}
             >
               {petTypeInput === "" && (
                 <option value="">Select the type of pet first</option>
               )}
               {petTypeInput === "Cat" && <CatFormColors></CatFormColors>}
               {petTypeInput === "Dog" && <DogFormColors></DogFormColors>}
-              {petTypeInput === "Exotic" && <option value="none">None</option>}
+              {petTypeInput === "Exotic" && <option value="">None</option>}
             </select>
           </div>
 
-          <div>
-            <label htmlFor="picture">Picture: </label>
-            <input type="file" ref={pictureInput} id="picture" />
+          <div className="formField">
+            <label htmlFor="age">Age: </label>
+            <input
+              type="number"
+              ref={ageInput}
+              id="age"
+              required="required"
+              defaultValue={petData["age"]}
+              placeholder="The age of your pet"
+            />
+
+            <label htmlFor="ageUnit"></label>
+            <select
+              ref={ageUnitInput}
+              id="ageUnit"
+              required="required"
+              defaultValue={petData["ageUnit"]}
+            >
+              <option value="">Y/M ?</option>
+              <option value="year(s)">Year(s)</option>
+              <option value="month(s)">Month(s)</option>
+            </select>
           </div>
 
-          <div>
+          <div className="formField">
+            <label htmlFor="picture">Picture: </label>
+            <input type="file" ref={pictureInput} id="picture" multiple />
+          </div>
+
+          <div className="formField">
             <label htmlFor="description">Description: </label>
             <textarea
               rows="3"
@@ -246,11 +312,7 @@ function UpdateFoundFormPage() {
             ></textarea>
           </div>
 
-          {/* <div>
-            <label htmlFor="foundPlace">Found Place: </label>
-            <input type="text" ref={reportPlaceInput} id="foundPlace" />
-          </div> */}
-          <div>
+          <div className="formField">
             <label htmlFor="reportPlace">Found Place: </label>
             <SearchPlaceInput
               placeInput={reportPlaceInput}
@@ -258,17 +320,20 @@ function UpdateFoundFormPage() {
               defaultValue={defaultPlace}
             ></SearchPlaceInput>
           </div>
-          <div>
-            <button type="submit">Submit</button>
+
+          <div className="formField">
+            <button type="submit" className="submitBtn">
+              Save Changes
+            </button>
+            <button onClick={goBack} className="cancelBtn">
+              Cancel
+            </button>
           </div>
           <p className="error">{error}</p>
         </form>
-
-        {/*         {errorMessage && <p className="error-message">{errorMessage}</p>}
-         */}
       </div>
     </>
   );
 }
 
-export default UpdateFoundFormPage;
+export default UpdateLostFormPage;
