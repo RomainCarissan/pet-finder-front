@@ -146,6 +146,7 @@ function LostPetFormPage() {
               </option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
+              <option value="I don't know">I don't know</option>
             </select>
           </div>
 
@@ -212,7 +213,7 @@ function LostPetFormPage() {
               )}
               {petTypeInput === "Cat" && <CatFormColors></CatFormColors>}
               {petTypeInput === "Dog" && <DogFormColors></DogFormColors>}
-              {petTypeInput === "Exotic" && <option value="">None</option>}
+              {petTypeInput === "Exotic" && <option value="None">None</option>}
             </select>
           </div>
 

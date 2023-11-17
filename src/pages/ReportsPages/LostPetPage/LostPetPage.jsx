@@ -5,16 +5,17 @@ import myApi from "../../../service/service.js";
 import "../ReportsPages.css";
 
 function LostPetPage() {
-  const [lossReports, setLossReports] = useState(null);
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const toHomePage = () => navigate(`/`);
   const toFoundForm = () => navigate(`/found-pet-form`);
+  const [lossReports, setLossReports] = useState(null);
 
   //fetch all the loss report so the founder can see if there is any reports about the pet he found
   async function fetchAllLossReports() {
     try {
       const response = await myApi.get("/api/lostpets");
-      setLossReports(response.data); //I can add filter to is lost = true
+      setLossReports(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -22,8 +23,6 @@ function LostPetPage() {
   useEffect(() => {
     fetchAllLossReports();
   }, []);
-
-  const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {
     return (

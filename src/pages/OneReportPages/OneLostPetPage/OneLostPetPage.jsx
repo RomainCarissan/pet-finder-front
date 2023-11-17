@@ -5,7 +5,6 @@ import myApi from "../../../service/service.js";
 import "../OneReportPages.css";
 
 function OneLostPetPage() {
-  const [oneLossReport, setOneLossReport] = useState(null);
   const params = useParams();
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -13,17 +12,23 @@ function OneLostPetPage() {
     navigate(`/lost-pet`);
   };
 
+  const [loading, setLoading] = useState(true);
+  const [oneLossReport, setOneLossReport] = useState(null);
+
+  //get the id from the url to get on specific loss report
   async function fetchOneLossReport() {
     try {
       const response = await myApi.get(`/api/lostpets/${params.id}`);
       setOneLossReport(response.data);
+      setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching the lost pet report:", error);
+      setLoading(false);
     }
   }
   useEffect(() => {
     fetchOneLossReport();
-  }, [params.id]);
+  }, [params.id]); // Fetch the lost pet report when the component mounts or when the ID changes
 
   if (!isLoggedIn) {
     return (
@@ -31,6 +36,9 @@ function OneLostPetPage() {
         Please <Link to="/login">Log in</Link>
       </p>
     );
+  }
+  if (loading) {
+    return <p>Loading...</p>;
   }
   if (!oneLossReport) {
     return <p className="errorReport">Error: Report not found</p>;
@@ -40,7 +48,6 @@ function OneLostPetPage() {
     month: "long",
     day: "numeric",
   }).format(new Date(oneLossReport.lossDate));
-
   return (
     <>
       <div className="oneReportPage">
@@ -50,7 +57,11 @@ function OneLostPetPage() {
         </button>
         <div className="containerOneReport">
           <div className="photoReport">
-            <img className="photo" src={oneLossReport.picture} />
+            <img
+              className="photo"
+              src={oneLossReport.picture}
+              alt={`${oneLossReport.petName} Image`}
+            />
           </div>
           <div className="infoReport">
             <h2 className="infoLossName">{oneLossReport.petName}</h2>

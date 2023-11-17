@@ -1,27 +1,16 @@
-import { useRef, useState, useContext } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext.jsx";
 import myApi from "../../service/service.js";
 import "./LoginPage.css";
-// import { AuthContext } from "./../context/AuthContext.jsx"
-
-/**
- * To have access to the values store in a context we neee:
- * - the Context (AuthContext here)
- * - useContext to well.. Use the context.?
- */
 
 function LoginPage() {
   const emailInput = useRef();
   const passwordInput = useRef();
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const { authenticateUser } = useAuth();
 
-  // const something = useContext(AuthContext)
-
-  // console.log(context)
   async function handleSubmit(event) {
     event.preventDefault();
     const email = emailInput.current.value;
@@ -31,8 +20,8 @@ function LoginPage() {
         email,
         password,
       });
-      console.log("success", response);
-      localStorage.setItem("authToken", response.data.authToken);
+      //console.log("success", response);
+      localStorage.setItem("authToken", response.data.authToken); //save authToken to localStorage
 
       await authenticateUser();
       navigate("/");
@@ -41,7 +30,7 @@ function LoginPage() {
       setError(error.response.data.message);
       setTimeout(() => {
         setError("");
-      }, 3000);
+      }, 3000); //clear the message after 3sec
     }
   }
   return (

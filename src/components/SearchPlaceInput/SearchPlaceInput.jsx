@@ -23,7 +23,9 @@ function SearchPlaceInput({ placeInput, updateCoordinates, defaultValue }) {
     setLoading(true);
     axios
       .get(
-        `https://api.geoapify.com/v1/geocode/autocomplete?text=${inputValue}&apiKey=211d3fb8da2745ef80e459dee5d35c87 `
+        `https://api.geoapify.com/v1/geocode/autocomplete?text=${inputValue}&apiKey=${
+          import.meta.env.VITE_GEOAPIFY_KEY
+        } `
       )
       .then((res) => {
         console.log("API Response:", res.data);

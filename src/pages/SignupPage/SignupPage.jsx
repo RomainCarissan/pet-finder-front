@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import "./SignupPage.css";
 
 function SignupPage() {
+  const navigate = useNavigate();
+
+  const [errorMessage, setErrorMessage] = useState(undefined);
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -11,9 +14,6 @@ function SignupPage() {
   const [phone, setPhone] = useState("");
   const [department, setDepartment] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState(undefined);
-
-  const navigate = useNavigate();
 
   const handleEmail = (e) => setEmail(e.target.value);
   const handleName = (e) => setName(e.target.value);
@@ -36,8 +36,6 @@ function SignupPage() {
       department,
     };
 
-    // Make an axios request to the API
-    // If POST request is successful redirect to login page
     // If the request resolves with an error, set the error message in the state
     myApi
       .post("/auth/signup", requestBody)

@@ -4,25 +4,29 @@ import { useState, useEffect } from "react";
 import myApi from "../../../service/service.js";
 
 function OneFoundPetPage() {
-  const [oneFoundReport, setOneFoundReport] = useState(null);
   const params = useParams();
   const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const goBack = () => {
     navigate(`/found-pet`);
   };
+  const [loading, setLoading] = useState(true);
+  const [oneFoundReport, setOneFoundReport] = useState(null);
 
+  //get the id from the url to get on specific found report
   async function fetchOneFoundReport() {
     try {
       const response = await myApi.get(`/api/foundpets/${params.id}`);
       setOneFoundReport(response.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
   }
   useEffect(() => {
     fetchOneFoundReport();
-  }, [params.id]);
+  }, [params.id]); // Fetch the lost pet report when the component mounts or when the ID changes
 
   if (!isLoggedIn) {
     return (
@@ -31,10 +35,12 @@ function OneFoundPetPage() {
       </p>
     );
   }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
   if (!oneFoundReport) {
     return <p className="errorReport">Error: report not found</p>;
   }
-
   const formattedDate = new Intl.DateTimeFormat(undefined, {
     year: "numeric",
     month: "long",
@@ -44,7 +50,7 @@ function OneFoundPetPage() {
   return (
     <>
       <div className="oneReportPage">
-        <h1>{oneFoundReport.petName} has been found!</h1>
+        <h1>{oneFoundReport.petName} is looking for his owner!</h1>
         <button onClick={goBack} className="backBtn">
           Go Back
         </button>

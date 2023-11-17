@@ -15,7 +15,7 @@ import {
 import ExoticFormBreeds from "../../../components/FormTypes/ExoticFormType.jsx";
 
 function UpdateLostFormPage() {
-  const { user, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const goBack = () => {
@@ -41,7 +41,6 @@ function UpdateLostFormPage() {
 
   const petNameInput = useRef();
   const lossDateInput = useRef();
-  /* const petTypeInput = useRef(); */
   const [petTypeInput, setPetTypeInput] = useState("");
   const petSexInput = useRef();
   const sterilizedInput = useRef();
@@ -65,20 +64,19 @@ function UpdateLostFormPage() {
     }
   }, [petData]);
 
+  // Update the coordonates when they are changed in the the componant searchPlaceInput
   const updateCoordinates = (coord) => {
     setCoordinates(coord);
-    //console.log(coord);
   };
+  // Update the list of breeds and colors depending on the petType chosen
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
 
   async function handleUpdateSubmit(event) {
     event.preventDefault();
-
     const petName = petNameInput.current.value;
     const lossDate = lossDateInput.current.value;
-    /* const petType = petTypeInput.current.value; */
     const petSex = petSexInput.current.value;
     const sterilized = sterilizedInput.current.value;
     const identification = identificationInput.current.value;
@@ -107,7 +105,6 @@ function UpdateLostFormPage() {
     if (lossDate) {
       fd.append("lossDate", lossDate);
     }
-    //fd.append("latLon", JSON.stringify(coordonates));
     if (coordonates) {
       fd.append("latLon", coordonates);
     }
@@ -135,7 +132,6 @@ function UpdateLostFormPage() {
       </p>
     );
   }
-
   if (!petData) {
     return <p>Loading...</p>;
   }
@@ -177,7 +173,6 @@ function UpdateLostFormPage() {
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Exotic">Exotic</option>
-              <option value="Other">Other</option>
             </select>
           </div>
 
@@ -267,7 +262,7 @@ function UpdateLostFormPage() {
               )}
               {petTypeInput === "Cat" && <CatFormColors></CatFormColors>}
               {petTypeInput === "Dog" && <DogFormColors></DogFormColors>}
-              {petTypeInput === "Exotic" && <option value="">None</option>}
+              {petTypeInput === "Exotic" && <option value="None">None</option>}
             </select>
           </div>
 
