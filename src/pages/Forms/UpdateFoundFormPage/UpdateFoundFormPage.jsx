@@ -9,13 +9,14 @@ import { CatFormColors } from "../../../components/FormTypes/CatFormType.jsx";
 import ExoticFormBreeds from "../../../components/FormTypes/ExoticFormType.jsx";
 
 function UpdateFoundFormPage() {
-  const { user, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const { id } = useParams();
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
 
+  const [loading, setLoading] = useState(false);
   const [petData, setPetData] = useState(null);
   const [error, setError] = useState("");
 
@@ -43,8 +44,8 @@ function UpdateFoundFormPage() {
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const reportPlaceInput = useRef();
-  const [coordonates, setCoordinates] = useState(null);
-  const [defaultPlace, setDefaultPlace] = useState(null);
+  const [coordonates, setCoordinates] = useState(null); //the 2 states are getting their value through the componant
+  const [defaultPlace, setDefaultPlace] = useState(null); //it allows to get back previous data or update it
 
   // Ensure that petData is available before setting the value of petTypeInput
   useEffect(() => {
@@ -54,11 +55,13 @@ function UpdateFoundFormPage() {
     }
   }, [petData]);
 
+  // Update the coordonates when they are changed in the the componant searchPlaceInput
   const updateCoordinates = (coord) => {
     setCoordinates(coord);
     console.log(coord);
   };
 
+  // Update the list of breeds and colors depending on the petType chosen
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
@@ -104,6 +107,8 @@ function UpdateFoundFormPage() {
       setTimeout(() => {
         setError("");
       }, 3000);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -114,13 +119,16 @@ function UpdateFoundFormPage() {
       </p>
     );
   }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
   if (!petData) {
     return <p>Loading...</p>;
   }
   return (
     <>
       <div className="reportPetFormContainer">
-        <h1>foundPetFormPage</h1>
+        <h1>Update you report...</h1>
         <form onSubmit={handleUpdateSubmit} className="reportPetForm">
           <div className="formField">
             <label htmlFor="petName">Name of the Pet: </label>
@@ -128,6 +136,7 @@ function UpdateFoundFormPage() {
               type="text"
               ref={petNameInput}
               id="petName"
+              required="required"
               defaultValue={petData["petName"]}
               placeholder="The name of the pet"
             />
@@ -155,7 +164,6 @@ function UpdateFoundFormPage() {
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Exotic">Exotic</option>
-              <option value="Other">Other</option>
             </select>
           </div>
           <div className="formField">
@@ -182,7 +190,7 @@ function UpdateFoundFormPage() {
               id="breed"
               defaultValue={petData["breed"]}
             >
-              {petTypeInput == !"Exotic" && (
+              {petTypeInput !== "Exotic" && (
                 <option value="">No need to specify</option>
               )}
               {petTypeInput === "Exotic" && (
@@ -232,10 +240,6 @@ function UpdateFoundFormPage() {
               placeholder="Add additional informations you would like to provide"
             ></textarea>
           </div>
-          {/* <div className="formField">
-            <label htmlFor="foundPlace">Found Place: </label>
-            <input type="text" ref={reportPlaceInput} id="foundPlace" />
-          </div> */}
           <div className="formField">
             <label htmlFor="reportPlace">Found Place: </label>
             <SearchPlaceInput
@@ -254,9 +258,6 @@ function UpdateFoundFormPage() {
           </div>
           <p className="error">{error}</p>
         </form>
-
-        {/*         {errorMessage && <p className="error-message">{errorMessage}</p>}
-         */}
       </div>
     </>
   );

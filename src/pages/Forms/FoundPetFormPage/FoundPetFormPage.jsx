@@ -9,31 +9,32 @@ import { CatFormColors } from "../../../components/FormTypes/CatFormType.jsx";
 import ExoticFormBreeds from "../../../components/FormTypes/ExoticFormType.jsx";
 
 function FoundPetFormPage() {
-  const [error, setError] = useState("");
+  const { isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const petNameInput = useRef();
   const foundDateInput = useRef();
-  /* const petTypeInput = useRef() */
-  const [petTypeInput, setPetTypeInput] = useState("");
+  const [petTypeInput, setPetTypeInput] = useState("-1");
   const petSexInput = useRef();
   const identificationInput = useRef();
   const breedInput = useRef();
   const colorsInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
-  const reportPlaceInput = useRef();
+  const reportPlaceInput = useRef(); //the 2 states are getting their value through the componant
   const [coordonates, setCoordinates] = useState(null);
 
+  // Update the coordonates when they are changed in the the componant searchPlaceInput
   const updateCoordinates = (coord) => {
     setCoordinates(coord);
-    console.log(coord);
   };
-  console.log(coordonates);
 
+  // Update the list of breeds and colors depending on the petType chosen
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
@@ -42,7 +43,6 @@ function FoundPetFormPage() {
     event.preventDefault();
     const petName = petNameInput.current.value;
     const foundDate = foundDateInput.current.value;
-    /* const petType = petTypeInput.current.value; */
     const petSex = petSexInput.current.value;
     const identification = identificationInput.current.value;
     const breed = breedInput.current.value;
@@ -63,8 +63,8 @@ function FoundPetFormPage() {
     fd.append("description", description);
     fd.append("foundPlace", reportPlace);
     fd.append("latLon", coordonates);
-    fd.append("lat", coordonates[0]);
-    fd.append("lon", coordonates[1]);
+    /* fd.append("lat", coordonates[0]);
+    fd.append("lon", coordonates[1]); */ //if you want to get the coord individualy
 
     try {
       const response = await myApi.post("/api/foundpets", fd);
@@ -79,14 +79,15 @@ function FoundPetFormPage() {
     }
   }
 
-  const { isLoggedIn } = useAuth();
-
   if (!isLoggedIn) {
     return (
       <p>
         Please <Link to="/login">Log in</Link>
       </p>
     );
+  }
+  if (loading) {
+    return <p>Loading...</p>;
   }
   return (
     <>
@@ -99,6 +100,7 @@ function FoundPetFormPage() {
               type="text"
               ref={petNameInput}
               id="petName"
+              required="required"
               placeholder="The name of the pet"
             />
           </div>
@@ -116,20 +118,19 @@ function FoundPetFormPage() {
               required="required"
               onChange={handlePetTypeChange}
             >
-              <option value="" disabled>
+              <option value="-1" disabled>
                 Select your response
               </option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Exotic">Exotic</option>
-              <option value="Other">Other</option>
             </select>
           </div>
 
           <div className="formField">
             <label htmlFor="petSex">Pet Sex: </label>
             <select ref={petSexInput} id="petSex" required="required">
-              <option value="" disabled>
+              <option selected disabled>
                 Select your response
               </option>
               <option value="Male">Male</option>
@@ -141,8 +142,13 @@ function FoundPetFormPage() {
           <div className="formField">
             <label htmlFor="breed">Breed: </label>
             <select type="text" ref={breedInput} id="breed">
-              {petTypeInput == !"Exotic" && (
-                <option value="">No need to specify</option>
+              {petTypeInput === "-1" && (
+                <option selected disabled>
+                  Select the type of pet first
+                </option>
+              )}
+              {petTypeInput !== "Exotic" && (
+                <option disabled>No need to specify</option>
               )}
               {petTypeInput === "Exotic" && (
                 <ExoticFormBreeds></ExoticFormBreeds>
@@ -168,8 +174,10 @@ function FoundPetFormPage() {
               id="colors"
               required="required"
             >
-              {petTypeInput === "" && (
-                <option value="">Select the type of pet first</option>
+              {petTypeInput === "-1" && (
+                <option selected disabled>
+                  Select the type of pet first
+                </option>
               )}
               {petTypeInput === "Cat" && <CatFormColors></CatFormColors>}
               {petTypeInput === "Dog" && <DogFormColors></DogFormColors>}
@@ -210,9 +218,6 @@ function FoundPetFormPage() {
           </div>
           <p className="error">{error}</p>
         </form>
-
-        {/*         {errorMessage && <p className="error-message">{errorMessage}</p>}
-         */}
       </div>
     </>
   );

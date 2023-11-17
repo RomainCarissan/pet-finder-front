@@ -22,6 +22,7 @@ function UpdateLostFormPage() {
     navigate(-1);
   };
 
+  const [loading, setLoading] = useState(false);
   const [petData, setPetData] = useState(null);
   const [error, setError] = useState("");
 
@@ -53,10 +54,10 @@ function UpdateLostFormPage() {
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const reportPlaceInput = useRef();
-  const [coordonates, setCoordinates] = useState(null);
-  const [defaultPlace, setDefaultPlace] = useState(null);
+  const [coordonates, setCoordinates] = useState(null); //the 2 states are getting their value through the componant
+  const [defaultPlace, setDefaultPlace] = useState(null); //it allows to get back previous data or update it
 
-  // Ensure that petData is available before setting the value of petTypeInput
+  // Ensure that petData is available before setting the value of petTypeInput/retrieve default value of place
   useEffect(() => {
     if (petData) {
       setPetTypeInput(petData["petType"]);
@@ -75,6 +76,7 @@ function UpdateLostFormPage() {
 
   async function handleUpdateSubmit(event) {
     event.preventDefault();
+    setLoading(true);
     const petName = petNameInput.current.value;
     const lossDate = lossDateInput.current.value;
     const petSex = petSexInput.current.value;
@@ -122,6 +124,8 @@ function UpdateLostFormPage() {
       setTimeout(() => {
         setError("");
       }, 3000);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -131,6 +135,9 @@ function UpdateLostFormPage() {
         Please <Link to="/login">Log in</Link>
       </p>
     );
+  }
+  if (loading) {
+    return <p>Loading...</p>;
   }
   if (!petData) {
     return <p>Loading...</p>;
@@ -146,6 +153,7 @@ function UpdateLostFormPage() {
               type="text"
               ref={petNameInput}
               id="petName"
+              required="required"
               defaultValue={petData["petName"]}
               placeholder="The name of your pet"
             />
@@ -169,7 +177,9 @@ function UpdateLostFormPage() {
               required="required"
               onChange={handlePetTypeChange}
             >
-              <option value="">Select your response</option>
+              <option value="" disabled>
+                Select your response
+              </option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
               <option value="Exotic">Exotic</option>
@@ -184,7 +194,9 @@ function UpdateLostFormPage() {
               required="required"
               defaultValue={petData["petSex"]}
             >
-              <option value="">Select your response</option>
+              <option value="" disabled>
+                Select your response
+              </option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -198,7 +210,9 @@ function UpdateLostFormPage() {
               required="required"
               defaultValue={petData["sterilized"]}
             >
-              <option value="">Select your response</option>
+              <option value="" disabled>
+                Select your response
+              </option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -221,10 +235,13 @@ function UpdateLostFormPage() {
               type="text"
               ref={breedInput}
               id="breed"
+              required="required"
               defaultValue={petData["breed"]}
             >
               {petTypeInput === "" && (
-                <option value="">Select the type of pet first</option>
+                <option value="" disabled>
+                  Select the type of pet first
+                </option>
               )}
               {petTypeInput === "Cat" && <CatFormBreeds></CatFormBreeds>}
               {petTypeInput === "Dog" && <DogFormBreeds></DogFormBreeds>}
@@ -242,7 +259,9 @@ function UpdateLostFormPage() {
               required="required"
               defaultValue={petData["mixed"]}
             >
-              <option value="">Select your response</option>
+              <option value="" disabled>
+                Select your response
+              </option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
             </select>
@@ -258,7 +277,9 @@ function UpdateLostFormPage() {
               defaultValue={petData["colors"]}
             >
               {petTypeInput === "" && (
-                <option value="">Select the type of pet first</option>
+                <option value="" disabled>
+                  Select the type of pet first
+                </option>
               )}
               {petTypeInput === "Cat" && <CatFormColors></CatFormColors>}
               {petTypeInput === "Dog" && <DogFormColors></DogFormColors>}
@@ -284,7 +305,9 @@ function UpdateLostFormPage() {
               required="required"
               defaultValue={petData["ageUnit"]}
             >
-              <option value="">Y/M ?</option>
+              <option value="" disabled>
+                Y/M ?
+              </option>
               <option value="year(s)">Year(s)</option>
               <option value="month(s)">Month(s)</option>
             </select>
@@ -310,9 +333,9 @@ function UpdateLostFormPage() {
           <div className="formField">
             <label htmlFor="reportPlace">Found Place: </label>
             <SearchPlaceInput
-              placeInput={reportPlaceInput}
-              updateCoordinates={updateCoordinates}
-              defaultValue={defaultPlace}
+              placeInput={reportPlaceInput} //get the address on the input to store it/update-it
+              updateCoordinates={updateCoordinates} //get coordonates if the address is updated/created
+              defaultValue={defaultPlace} //retrieve default value to the address
             ></SearchPlaceInput>
           </div>
 

@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import myApi from "../../service/service";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -9,13 +9,6 @@ import "./PetMap.css";
 function PetMap() {
   const [allLossReports, setAllLossReports] = useState(null);
   const [allFoundReports, setAllFoundReports] = useState(null);
-  /* const navigate = useNavigate();
-  const toOneLostPage = (reportId) => {
-    navigate(`/lost-pet/${reportId}`);
-  };
-  const toOneFoundPage = (reportId) => {
-    navigate(`/found-pet/${reportId}`);
-  }; */
 
   async function fetchAllReports(endpoint, setDataFunction) {
     try {
@@ -39,7 +32,7 @@ function PetMap() {
     }).format(new Date(dateString));
   };
 
-  /* const lossIcon = new L.Icon({
+  /* const lossIcon = new L.Icon({  //will be used to create custom icons
     iconUrl: "url-to-loss-icon.png",
     iconSize: [32, 32],
     iconAnchor: [16, 32],
@@ -71,8 +64,6 @@ function PetMap() {
         style={{
           height: "30rem",
           width: "35rem",
-          /* minHeight: "26rem",
-          minWidth: "20rem", */
           borderRadius: "37px",
           display: "flex",
           flex: "1",
@@ -85,6 +76,7 @@ function PetMap() {
 
         {allLossReports &&
           allLossReports.map((report) => {
+            //if there is a issue with the coords, this will avoid en error and display the next report
             if (report.latLon === "null" || !report.latLon) {
               return null;
             }

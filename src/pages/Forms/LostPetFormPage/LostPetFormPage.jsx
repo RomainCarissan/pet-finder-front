@@ -21,10 +21,11 @@ function LostPetFormPage() {
     navigate(-1);
   };
 
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const petNameInput = useRef();
   const lossDateInput = useRef();
-  const [petTypeInput, setPetTypeInput] = useState("");
+  const [petTypeInput, setPetTypeInput] = useState("-1");
   const petSexInput = useRef();
   const sterilizedInput = useRef();
   const identificationInput = useRef();
@@ -35,15 +36,15 @@ function LostPetFormPage() {
   const ageUnitInput = useRef();
   const pictureInput = useRef();
   const descriptionInput = useRef();
-  const reportPlaceInput = useRef();
+  const reportPlaceInput = useRef(); //the 2 states are getting their value through the componant
   const [coordonates, setCoordinates] = useState(null);
 
+  // Update the coordonates when they are changed in the the componant searchPlaceInput
   const updateCoordinates = (coord) => {
     setCoordinates(coord);
-    console.log(coord);
   };
-  console.log(coordonates);
 
+  // Update the list of breeds and colors depending on the petType chosen
   const handlePetTypeChange = (event) => {
     setPetTypeInput(event.target.value);
   };
@@ -101,6 +102,9 @@ function LostPetFormPage() {
       </p>
     );
   }
+  if (loading) {
+    return <p>Loading...</p>;
+  }
   return (
     <>
       <div className="reportPetFormContainer">
@@ -112,13 +116,19 @@ function LostPetFormPage() {
               type="text"
               ref={petNameInput}
               id="petName"
+              required="required"
               placeholder="The name of your pet"
             />
           </div>
 
           <div className="formField">
             <label htmlFor="lossDate">Loss Date: </label>
-            <input type="date" ref={lossDateInput} id="lossDate" />
+            <input
+              type="date"
+              ref={lossDateInput}
+              id="lossDate"
+              required="required"
+            />
           </div>
 
           <div className="formField">
@@ -129,19 +139,19 @@ function LostPetFormPage() {
               required="required"
               onChange={handlePetTypeChange}
             >
-              <option value="" disabled>
+              <option value="-1" disabled>
                 Select your response
               </option>
               <option value="Dog">Dog</option>
               <option value="Cat">Cat</option>
-              <option value="Exotic">Exotic (others)</option>
+              <option value="Exotic">Exotic</option>
             </select>
           </div>
 
           <div className="formField">
             <label htmlFor="petSex">Pet Sex: </label>
             <select ref={petSexInput} id="petSex" required="required">
-              <option value="" disabled>
+              <option selected disabled>
                 Select your response
               </option>
               <option value="Male">Male</option>
@@ -153,7 +163,7 @@ function LostPetFormPage() {
           <div className="formField">
             <label htmlFor="sterilized">Sterilized: </label>
             <select ref={sterilizedInput} id="sterilized" required="required">
-              <option value="" disabled>
+              <option selected disabled>
                 Select your response
               </option>
               <option value="Yes">Yes</option>
@@ -174,8 +184,8 @@ function LostPetFormPage() {
           <div className="formField">
             <label htmlFor="breed">Breed: </label>
             <select type="text" ref={breedInput} id="breed">
-              {petTypeInput === "" && (
-                <option value="" disabled>
+              {petTypeInput === "-1" && (
+                <option selected disabled>
                   Select the type of pet first
                 </option>
               )}
@@ -190,7 +200,7 @@ function LostPetFormPage() {
           <div className="formField">
             <label htmlFor="mixed">Mixed Breed: </label>
             <select ref={mixedInput} id="mixed" required="required">
-              <option value="" disabled>
+              <option value="default" disabled>
                 Select your response
               </option>
               <option value="Yes">Yes</option>
@@ -206,8 +216,8 @@ function LostPetFormPage() {
               id="colors"
               required="required"
             >
-              {petTypeInput === "" && (
-                <option value="" disabled>
+              {petTypeInput === "-1" && (
+                <option selected disabled>
                   Select the type of pet first
                 </option>
               )}
@@ -229,7 +239,7 @@ function LostPetFormPage() {
 
             <label htmlFor="ageUnit"></label>
             <select ref={ageUnitInput} id="ageUnit" required="required">
-              <option value="" disabled>
+              <option selected disabled>
                 Y/M ?
               </option>
               <option value="year(s)">Year(s)</option>
@@ -256,8 +266,8 @@ function LostPetFormPage() {
           <div className="formField">
             <label htmlFor="reportPlace">Loss Place: </label>
             <SearchPlaceInput
-              placeInput={reportPlaceInput}
-              updateCoordinates={updateCoordinates}
+              placeInput={reportPlaceInput} //get the address on the input to store it
+              updateCoordinates={updateCoordinates} //get coordonates when the input is changed
             ></SearchPlaceInput>
           </div>
 
