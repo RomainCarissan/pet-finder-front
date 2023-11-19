@@ -31,7 +31,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route index element={<HomePage />} />
-            {/* The conversations routes should be accessible only if a user */}
+            {/* The conversations routes are accessible only if a user */}
             {/* is Logged in */}
             <Route element={<LoggedInUser />}>
               <Route path="/my-profil" element={<ProfilPage />} />
@@ -53,7 +53,7 @@ function App() {
                 element={<UpdateLostFormPage />}
               />
             </Route>
-            {/* Login / Signup routes should be accessible to Logged out users */}
+            {/* Login / Signup routes are accessible to Logged out users */}
 
             <Route element={<LoggedOutUser />}>
               <Route path="/signup" element={<SignupPage />} />
