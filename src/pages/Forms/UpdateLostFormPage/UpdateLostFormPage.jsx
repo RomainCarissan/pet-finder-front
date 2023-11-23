@@ -47,8 +47,10 @@ function UpdateLostFormPage() {
   const sterilizedInput = useRef();
   const identificationInput = useRef();
   const mixedInput = useRef();
-  const colorsInput = useRef();
-  const breedInput = useRef();
+  /* const colorsInput = useRef();
+  const breedInput = useRef(); */
+  const [colors, setColors] = useState("-1");
+  const [breed, setBreed] = useState("-1");
   const ageInput = useRef();
   const ageUnitInput = useRef();
   const pictureInput = useRef();
@@ -62,6 +64,8 @@ function UpdateLostFormPage() {
     if (petData) {
       setPetTypeInput(petData["petType"]);
       setDefaultPlace(petData["lossPlace"]);
+      setColors(petData["colors"]);
+      setBreed(petData["breed"]);
     }
   }, [petData]);
 
@@ -74,6 +78,14 @@ function UpdateLostFormPage() {
     setPetTypeInput(event.target.value);
   };
 
+  const handleColorsChange = (e) => {
+    setColors(e.target.value);
+  };
+
+  const handleBreedChange = (e) => {
+    setBreed(e.target.value);
+  };
+
   async function handleUpdateSubmit(event) {
     event.preventDefault();
     setLoading(true);
@@ -82,9 +94,9 @@ function UpdateLostFormPage() {
     const petSex = petSexInput.current.value;
     const sterilized = sterilizedInput.current.value;
     const identification = identificationInput.current.value;
-    const breed = breedInput.current.value;
     const mixed = mixedInput.current.value;
-    const colors = colorsInput.current.value;
+    /*  const breed = breedInput.current.value;
+    const colors = colorsInput.current.value; */
     const age = ageInput.current.value;
     const ageUnit = ageUnitInput.current.value;
     const picture = pictureInput.current.files[0];
@@ -99,7 +111,9 @@ function UpdateLostFormPage() {
     fd.append("identification", identification);
     fd.append("breed", breed);
     fd.append("mixed", mixed);
-    fd.append("colors", colors);
+    if (colors) {
+      fd.append("colors", colors);
+    }
     fd.append("age", age);
     fd.append("ageUnit", ageUnit);
     fd.append("description", description);
@@ -117,12 +131,13 @@ function UpdateLostFormPage() {
     try {
       const response = await myApi.put(`/api/lostpets/${id}`, fd);
       console.log("lost-pet updated", response);
-      navigate(`/lost-pet/${id}`);
+      /* navigate(`/lost-pet/${id}`); */
+      navigate("/my-profil");
     } catch (error) {
       console.log(error.response);
       setError(error.response.data.message);
       setTimeout(() => {
-        setError("");
+        setError(-1);
       }, 3000);
     } finally {
       setLoading(false);
@@ -177,7 +192,7 @@ function UpdateLostFormPage() {
               required="required"
               onChange={handlePetTypeChange}
             >
-              <option value="" disabled>
+              <option value="-1" disabled>
                 Select your response
               </option>
               <option value="Dog">Dog</option>
@@ -233,10 +248,12 @@ function UpdateLostFormPage() {
             <label htmlFor="breed">Breed: </label>
             <select
               type="text"
-              ref={breedInput}
+              /* ref={breedInput} */
+              value={breed}
+              onChange={handleBreedChange}
               id="breed"
               required="required"
-              defaultValue={petData["breed"]}
+              /* defaultValue={petData["breed"]} */
             >
               {petTypeInput === "" && (
                 <option value="" disabled>
@@ -271,10 +288,12 @@ function UpdateLostFormPage() {
             <label htmlFor="colors">Colors: </label>
             <select
               type="text"
-              ref={colorsInput}
+              /* ref={colorsInput} */
+              value={colors}
+              onChange={handleColorsChange}
               id="colors"
               required="required"
-              defaultValue={petData["colors"]}
+              /* defaultValue={petData["colors"]} */
             >
               {petTypeInput === "" && (
                 <option value="" disabled>

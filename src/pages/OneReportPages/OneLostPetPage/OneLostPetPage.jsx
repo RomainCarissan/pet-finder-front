@@ -72,7 +72,7 @@ function OneLostPetPage() {
             <p className="OneReportDescription">{oneLossReport.description}</p>
             <div className="creatorInfo">
               <h4>
-                Found by: {oneLossReport.creator.name}{" "}
+                Owned by: {oneLossReport.creator.name}{" "}
                 {oneLossReport.creator.lastName}
                 <br />
                 Phone: {oneLossReport.creator.phone} <br />

@@ -201,7 +201,7 @@ function DogFormBreeds() {
 
   return (
     <>
-      <option selected disabled>
+      <option value="-1" disabled>
         Select the dog breed
       </option>
       {dogBreeds.map((breed) => {
@@ -253,7 +253,7 @@ function DogFormColors() {
 
   return (
     <>
-      <option selected disabled>
+      <option value="-1" disabled>
         Select the dog color
       </option>
       {dogColors.map((color) => {

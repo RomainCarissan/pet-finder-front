@@ -1,6 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
+import React, { useState } from "react";
 import { useAuth } from "./../../context/AuthContext.jsx";
+import petFinderLogo from "../../images/petfinder-logo-v5.png";
 
 function Navbar() {
   const { isLoggedIn, authenticateUser, user } = useAuth();
@@ -28,14 +30,17 @@ function Navbar() {
         </ul>
       </nav>
       <Link to="/">
-        <h1>PetFinder</h1>
+        <img src={petFinderLogo} alt="logo" />
       </Link>
       <nav className="rightNavBarSide">
         <ul className="rightLinks">
           {isLoggedIn ? (
-            <li>
-              <button onClick={handleLogout}>Logout</button>
-            </li>
+            <>
+              <li>Hi {user && user.name}!</li>
+              <li>
+                <button onClick={handleLogout}>Logout</button>
+              </li>
+            </>
           ) : (
             <>
               <li>

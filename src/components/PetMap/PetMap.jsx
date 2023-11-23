@@ -5,6 +5,8 @@ import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./PetMap.css";
+import foundPetPin from "../../images/found-pet-pin-v2.png";
+import lostPetPin from "../../images/lost-pet-pin-v2.png";
 
 function PetMap() {
   const [allLossReports, setAllLossReports] = useState(null);
@@ -32,19 +34,20 @@ function PetMap() {
     }).format(new Date(dateString));
   };
 
-  /* const lossIcon = new L.Icon({  //will be used to create custom icons
-    iconUrl: "url-to-loss-icon.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
+  const lossIcon = new L.Icon({
+    //will be used to create custom icons
+    iconUrl: lostPetPin,
+    iconSize: [20, 32],
+    iconAnchor: [10, 32],
     popupAnchor: [0, -32],
   });
 
   const foundIcon = new L.Icon({
-    iconUrl: "url-to-found-icon.png",
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
+    iconUrl: foundPetPin,
+    iconSize: [20, 32],
+    iconAnchor: [10, 32],
     popupAnchor: [0, -32],
-  }); */
+  });
 
   const getColorMarker = (color) =>
     new L.Icon({
@@ -56,17 +59,20 @@ function PetMap() {
     });
 
   return (
-    <div>
+    <>
       <MapContainer
         center={[46.603354, 1.8883335]}
         zoom={5}
         scrollWheelZoom={true}
         style={{
-          height: "30rem",
+          /* height: "30rem",
           width: "35rem",
           borderRadius: "37px",
           display: "flex",
-          flex: "1",
+          flex: "1", */
+          height: "100%",
+          width: "100%",
+          borderRadius: "37px",
         }}
       >
         <TileLayer
@@ -84,7 +90,7 @@ function PetMap() {
               <div key={report._id}>
                 <Marker
                   position={report.latLon.split(",")}
-                  /* icon={lossIcon} */ icon={getColorMarker("red")}
+                  icon={lossIcon} /* icon={getColorMarker("red")} */
                 >
                   <Popup className="Popup">
                     <div className="imageContainer">
@@ -116,7 +122,7 @@ function PetMap() {
               <div key={report._id}>
                 <Marker
                   position={report.latLon.split(",")}
-                  /* icon={foundIcon} */ icon={getColorMarker("green")}
+                  icon={foundIcon} /* icon={getColorMarker("green")} */
                 >
                   <Popup className="Popup">
                     <div className="imageContainer">
@@ -139,7 +145,7 @@ function PetMap() {
             );
           })}
       </MapContainer>
-    </div>
+    </>
   );
 }
 

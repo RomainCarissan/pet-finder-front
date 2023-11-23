@@ -39,8 +39,10 @@ function UpdateFoundFormPage() {
   const [petTypeInput, setPetTypeInput] = useState("");
   const petSexInput = useRef();
   const identificationInput = useRef();
-  const colorsInput = useRef();
-  const breedInput = useRef();
+  /* const colorsInput = useRef();
+  const breedInput = useRef(); */
+  const [colors, setColors] = useState("-1");
+  const [breed, setBreed] = useState("-1");
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const reportPlaceInput = useRef();
@@ -52,6 +54,8 @@ function UpdateFoundFormPage() {
     if (petData) {
       setPetTypeInput(petData["petType"]);
       setDefaultPlace(petData["foundPlace"]);
+      setColors(petData["colors"]);
+      setBreed(petData["breed"]);
     }
   }, [petData]);
 
@@ -66,14 +70,22 @@ function UpdateFoundFormPage() {
     setPetTypeInput(event.target.value);
   };
 
+  const handleColorsChange = (e) => {
+    setColors(e.target.value);
+  };
+
+  const handleBreedChange = (e) => {
+    setBreed(e.target.value);
+  };
+
   async function handleUpdateSubmit(event) {
     event.preventDefault();
     const petName = petNameInput.current.value;
     const foundDate = foundDateInput.current.value;
     const petSex = petSexInput.current.value;
     const identification = identificationInput.current.value;
-    const breed = breedInput.current.value;
-    const colors = colorsInput.current.value;
+    /* const breed = breedInput.current.value;
+    const colors = colorsInput.current.value; */
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
     const reportPlace = reportPlaceInput.current.value;
@@ -84,7 +96,9 @@ function UpdateFoundFormPage() {
     fd.append("petSex", petSex);
     fd.append("identification", identification);
     fd.append("breed", breed);
-    fd.append("colors", colors);
+    if (colors) {
+      fd.append("colors", colors);
+    }
     fd.append("description", description);
     fd.append("foundPlace", reportPlace);
     if (foundDate) {
@@ -100,7 +114,8 @@ function UpdateFoundFormPage() {
     try {
       const response = await myApi.put(`/api/foundpets/${id}`, fd);
       console.log("found-pet added", response);
-      navigate(`/found-pet/${id}`);
+      /* navigate(`/found-pet/${id}`); */
+      navigate("/my-profil");
     } catch (error) {
       console.log(error.response);
       setError(error.response.data.message);
@@ -186,9 +201,11 @@ function UpdateFoundFormPage() {
             <label htmlFor="breed">Breed: </label>
             <select
               type="text"
-              ref={breedInput}
+              /* ref={breedInput} */
+              value={breed}
+              onChange={handleBreedChange}
               id="breed"
-              defaultValue={petData["breed"]}
+              /* defaultValue={petData["breed"]} */
             >
               {petTypeInput !== "Exotic" && (
                 <option value="">No need to specify</option>
@@ -212,9 +229,11 @@ function UpdateFoundFormPage() {
             <label htmlFor="colors">Colors: </label>
             <select
               type="text"
-              ref={colorsInput}
+              /* ref={colorsInput} */
+              value={colors}
+              onChange={handleColorsChange}
               id="colors"
-              defaultValue={petData["colors"]}
+              /* defaultValue={petData["colors"]} */
               required="required"
             >
               {petTypeInput === "" && (

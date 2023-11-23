@@ -15,7 +15,7 @@
 .homepageButton {
   padding: 10px 20px;
   font-size: 16px;
-  background-color: #42978a;
+  background-color: #42998d;
   color: #ffffff;
   text-decoration: none;
   border: none;
@@ -28,6 +28,44 @@
   background-color: #327168;
 }
 
+/* .mapHolder {
+  margin-top: 20px;
+  height: 30rem;
+  width: 35rem;
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .mapHolder {
+    width: 100%; 
+  }
+} */
+
+/*.mapHolder {
+  margin-top: 20px;
+  height: 30rem;
+  width: 35rem;
+  display: flex;
+}
+
+ @media screen and (max-width: 768px) {
+  .mapHolder {
+    width: 80vw; 
+  }
+}
+ */
+
 .mapHolder {
   margin-top: 20px;
+  width: 70vw;
+  height: 30rem;
+  max-width: 35rem;
+  display: flex;
+}
+
+@media screen and (max-width: 768px) {
+  .mapHolder {
+    width: 90vw;
+    max-width: none;
+  }
 }

@@ -72,8 +72,8 @@ function OneFoundPetPage() {
                 Found by: {oneFoundReport.creator.name}{" "}
                 {oneFoundReport.creator.lastName}
                 <br />
-                phone: {oneFoundReport.creator.phone} <br />
-                address: {oneFoundReport.creator.address}
+                Phone: {oneFoundReport.creator.phone} <br />
+                Address: {oneFoundReport.creator.address}
               </h4>
             </div>
           </div>

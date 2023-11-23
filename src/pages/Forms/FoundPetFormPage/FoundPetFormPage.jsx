@@ -17,13 +17,16 @@ function FoundPetFormPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const petNameInput = useRef();
   const foundDateInput = useRef();
   const [petTypeInput, setPetTypeInput] = useState("-1");
   const petSexInput = useRef();
   const identificationInput = useRef();
-  const breedInput = useRef();
-  const colorsInput = useRef();
+  /* const breedInput = useRef();
+  const colorsInput = useRef(); */
+  const [colors, setColors] = useState("-1");
+  const [breed, setBreed] = useState("-1");
   const pictureInput = useRef();
   const descriptionInput = useRef();
   const reportPlaceInput = useRef(); //the 2 states are getting their value through the componant
@@ -39,14 +42,22 @@ function FoundPetFormPage() {
     setPetTypeInput(event.target.value);
   };
 
+  const handleColorsChange = (e) => {
+    setColors(e.target.value);
+  };
+
+  const handleBreedChange = (e) => {
+    setBreed(e.target.value);
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     const petName = petNameInput.current.value;
     const foundDate = foundDateInput.current.value;
     const petSex = petSexInput.current.value;
     const identification = identificationInput.current.value;
-    const breed = breedInput.current.value;
-    const colors = colorsInput.current.value;
+    /* const breed = breedInput.current.value;
+    const colors = colorsInput.current.value; */
     const picture = pictureInput.current.files[0];
     const description = descriptionInput.current.value;
     const reportPlace = reportPlaceInput.current.value;
@@ -141,14 +152,21 @@ function FoundPetFormPage() {
 
           <div className="formField">
             <label htmlFor="breed">Breed: </label>
-            <select type="text" ref={breedInput} id="breed">
+            <select
+              type="text"
+              /* ref={breedInput} */ value={breed}
+              onChange={handleBreedChange}
+              id="breed"
+            >
               {petTypeInput === "-1" && (
-                <option selected disabled>
+                <option value="-1" disabled>
                   Select the type of pet first
                 </option>
               )}
               {petTypeInput !== "Exotic" && (
-                <option disabled>No need to specify</option>
+                <option value="" disabled>
+                  No need to specify
+                </option>
               )}
               {petTypeInput === "Exotic" && (
                 <ExoticFormBreeds></ExoticFormBreeds>
@@ -170,12 +188,14 @@ function FoundPetFormPage() {
             <label htmlFor="colors">Colors: </label>
             <select
               type="text"
-              ref={colorsInput}
+              /* ref={colorsInput} */
+              value={colors}
+              onChange={handleColorsChange}
               id="colors"
               required="required"
             >
               {petTypeInput === "-1" && (
-                <option selected disabled>
+                <option value="-1" disabled>
                   Select the type of pet first
                 </option>
               )}

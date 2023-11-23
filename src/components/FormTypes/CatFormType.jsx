@@ -59,7 +59,7 @@ function CatFormBreeds() {
 
   return (
     <>
-      <option selected disabled>
+      <option value="-1" disabled>
         Select the cat breed
       </option>
       {catBreeds.map((breed) => {
@@ -103,7 +103,7 @@ function CatFormColors() {
 
   return (
     <>
-      <option selected disabled>
+      <option value="-1" disabled>
         Select the cat color
       </option>
       {catColors.map((color) => {

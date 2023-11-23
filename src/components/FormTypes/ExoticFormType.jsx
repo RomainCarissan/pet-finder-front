@@ -163,7 +163,7 @@ function ExoticFormBreeds() {
   ];
   return (
     <>
-      <option selected disabled>
+      <option value="-1" disabled>
         Select the exotic breed
       </option>
       {exoticBreeds.map((breed) => {

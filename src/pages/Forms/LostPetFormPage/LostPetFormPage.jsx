@@ -23,6 +23,7 @@ function LostPetFormPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
   const petNameInput = useRef();
   const lossDateInput = useRef();
   const [petTypeInput, setPetTypeInput] = useState("-1");
@@ -30,8 +31,10 @@ function LostPetFormPage() {
   const sterilizedInput = useRef();
   const identificationInput = useRef();
   const mixedInput = useRef();
-  const colorsInput = useRef();
-  const breedInput = useRef();
+  /*const colorsInput = useRef(); 
+  const breedInput = useRef();*/
+  const [colors, setColors] = useState("-1");
+  const [breed, setBreed] = useState("-1");
   const ageInput = useRef();
   const ageUnitInput = useRef();
   const pictureInput = useRef();
@@ -49,6 +52,14 @@ function LostPetFormPage() {
     setPetTypeInput(event.target.value);
   };
 
+  const handleColorsChange = (e) => {
+    setColors(e.target.value);
+  };
+
+  const handleBreedChange = (e) => {
+    setBreed(e.target.value);
+  };
+
   async function handleSubmit(event) {
     event.preventDefault();
     const petName = petNameInput.current.value;
@@ -56,9 +67,9 @@ function LostPetFormPage() {
     const petSex = petSexInput.current.value;
     const sterilized = sterilizedInput.current.value;
     const identification = identificationInput.current.value;
-    const breed = breedInput.current.value;
+    /* const breed = breedInput.current.value;
+    const colors = colorsInput.current.value; */
     const mixed = mixedInput.current.value;
-    const colors = colorsInput.current.value;
     const age = ageInput.current.value;
     const ageUnit = ageUnitInput.current.value;
     const picture = pictureInput.current.files[0];
@@ -73,8 +84,8 @@ function LostPetFormPage() {
     fd.append("sterilized", sterilized);
     fd.append("identification", identification);
     fd.append("breed", breed);
-    fd.append("mixed", mixed);
     fd.append("colors", colors);
+    fd.append("mixed", mixed);
     fd.append("age", age);
     fd.append("ageUnit", ageUnit);
     fd.append("picture", picture);
@@ -183,9 +194,14 @@ function LostPetFormPage() {
 
           <div className="formField">
             <label htmlFor="breed">Breed: </label>
-            <select type="text" ref={breedInput} id="breed">
+            <select
+              type="text"
+              /* ref={breedInput} */ value={breed}
+              onChange={handleBreedChange}
+              id="breed"
+            >
               {petTypeInput === "-1" && (
-                <option selected disabled>
+                <option value="-1" disabled>
                   Select the type of pet first
                 </option>
               )}
@@ -212,12 +228,14 @@ function LostPetFormPage() {
             <label htmlFor="colors">Colors: </label>
             <select
               type="text"
-              ref={colorsInput}
+              /* ref={colorsInput} */
+              value={colors}
+              onChange={handleColorsChange}
               id="colors"
               required="required"
             >
               {petTypeInput === "-1" && (
-                <option selected disabled>
+                <option value="-1" disabled>
                   Select the type of pet first
                 </option>
               )}

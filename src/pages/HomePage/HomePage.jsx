@@ -11,19 +11,19 @@ function HomePage() {
       {isLoggedIn ? (
         <div className="buttonsHolder">
           <Link to="/lost-pet">
-            <button className="homepageButton">I found a pet</button>
+            <button className="homepageButton">I've found a pet</button>
           </Link>
           <Link to="/found-pet">
-            <button className="homepageButton">I lost a pet</button>
+            <button className="homepageButton">I've lost a pet</button>
           </Link>
         </div>
       ) : (
         <div className="buttonsHolder">
           <Link to="/login">
-            <button className="homepageButton">I found a pet</button>
+            <button className="homepageButton">I've found a pet</button>
           </Link>
           <Link to="/login">
-            <button className="homepageButton">I lost a pet</button>
+            <button className="homepageButton">I've lost a pet</button>
           </Link>
         </div>
       )}
